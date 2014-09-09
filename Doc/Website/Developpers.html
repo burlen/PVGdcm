@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+   <META http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+   <TITLE>Gdcm Developpers</TITLE>
+</HEAD>
+
+<BODY>
+
+<!#######################################################################>
+<H1>Gdcm Developpers</H1>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+<!#######################################################################>
+<A HREF="http://public.kitware.com/dashboard.php?name=gdcm">
+DashBoard</A> (look for a "Build Name" containing GDCM)
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+<!#######################################################################>
+First you should be familiar on how to 
+<A HREF="Installation.html">recompile, install and test</A>
+gdcm from the
+<A HREF="Cvs.html">sources obtained with cvs</A>.
+<BR>
+<!##############################>
+Please adopt the
+<A HREF="CodingStyle.html"><B>coding style</B></A>.
+<BR>
+<!##############################>
+<H3>CVS policy</H3>
+<UL>
+<LI>All the commits should be atomic. They must preserve the compilation
+  in order to prevent checkouts with broken code.
+</LI>
+<LI> All the commits must correspond to a state of the code where <TT>ctest</TT>
+  runs and has no failing subtest. <b>Always</b> run <TT>ctest</TT> before 
+  commiting.
+  <BR>
+  <B>Notes</B>:
+  <UL>
+  <LI> you can start <TT>ctest</TT> in verbose mode through the command
+     <TT>ctest -V >& log</TT>
+  </LI>
+  <LI> you can start a single test through <TT>ctest</TT> with
+      <TT>ctest -R <i>FailingTestName</i> -V >& log</TT>
+  </LI>
+  </UL>
+</LI>
+</UL>
+
+<!##############################>
+<H3>Compiler flags policy</H3>
+When working with <TT>gcc</TT>, please use the following flags when
+configuring the <TT>cmake</TT> variable <TT>CMAKE_CXX_FLAGS</TT>
+As a side note if you have proper <TT>bash/zsh</TT> setup <TT>cmake</TT> 
+automatically inspect your <TT>CFLAGS</TT> and <TT>CXXFLAGS</TT>. 
+So you can set them up for any project. 
+<b>Be carefull</b> though, the quality of your code will greatly
+improve by doing so.
+<BR>
+For CFLAGS:
+<TT> -Wall -W 
+</TT>
+<BR>
+For CXXFLAGS:
+<TT> -Wall -W -Wshadow -Wunused -Wno-system-headers -Wno-deprecated
+     -Woverloaded-virtual
+</TT>
+<BR>
+For paranoid people, or simply beginner you can also try to compiler gdcm
+using the <TT>-pedantic</TT> flag compiler option.
+
+<!##############################>
+<H3>Sending the result to kitware's dashboard (optional)</H3>
+Use <TT>ctest -D Experimental</TT>.
+<BR>
+The results should appear in
+<A HREF="http://public.kitware.com/dashboard.php?name=gdcm">
+        Kitware's dashboard</A>
+under the name of your machine (uname). For ease of use you can
+change the <TT>BUILDNAME</TT> variable in your <TT>CMakeCache.txt</TT> 
+to something more accurate such as: GDCM-my_machine_name. The entry will 
+then be within the "Experimental Builds" entry.<BR>
+<b>UPDATE:</b>Since GDCM moved to its own dashboard there is no possible
+collision with other project. You can then send dashboard without having
+to properly prepend 'GDCM-' to your cmake <TT>BUILDNAME</TT> variable. But the 
+Win32, mingw, gcc, SunOS is still very important...
+
+
+
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+</BODY>
+</HTML>

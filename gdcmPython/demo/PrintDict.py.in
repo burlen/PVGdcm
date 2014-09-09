@@ -1,0 +1,41 @@
+from gdcmConfigDemo import *
+from gdcmPython.core import *
+
+print "############################################################## DictSet "
+# Print the DictSet
+dicts=gdcm.Global.GetDicts()
+if(not isinstance(dicts,gdcm.DictSet)):
+   raise RuntimeError,"The DictSet hasn't the good type (%s)" % type(dicts)
+print "DictSet content :"
+dicts.Print()
+
+print "##################################################### Print Public Dict"
+# Print the Dict (public)
+pubDict=dicts.GetDefaultPubDict()
+if(not isinstance(pubDict,gdcm.Dict)):
+   raise RuntimeError,"The public Dict hasn't the good type (%s)" % type(dict)
+print "Public Dict content :"
+pubDict.Print()
+
+print "################################################# DictEntry (0010|0020)"
+# Print the DictEntry (0010|0020)
+ENTRY_GR = 0x10
+ENTRY_EL = 0x20
+entry=pubDict.GetEntry(ENTRY_GR,ENTRY_EL)
+if(not isinstance(entry,gdcm.DictEntry)):
+   raise RuntimeError,"The entry (%04x|%04x) hasn't the good type (%s)" % \
+         (ENTRY_GR,ENTRY_EL,type(entry))
+print "Entry (%04x|%04x) content :" % (ENTRY_GR,ENTRY_EL)
+entry.Print()
+
+print "########################################### Print Public Dict Entries "
+# Print the public Dict content
+print "dict content :"
+entry=pubDict.GetFirstEntry()
+while(entry):
+   print "%4x|%4x [%s] - VM %s : %s (%s)" %\
+        (entry.GetGroup(),entry.GetElement(),entry.GetVR().str(), \
+	entry.GetVM(), entry.GetName(),entry.GetKey().str())
+   entry=pubDict.GetNextEntry()
+
+print "########################################################## Game over "

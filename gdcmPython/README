@@ -1,0 +1,12 @@
+Variables that should be set in order to work with gdcmPython:
+GDCM_DATA_ROOT path to gdcmData
+PYTHONPATH path to both 
+ - GDCM_BIN
+ - GDCM_BIN/bin (for linux) or GDCM_BIN/bin/Release (for Windows)
+
+e.g.
+
+export GDCM_DICT_PATH=~/cvs/gdcm/Dicts/
+export GDCM_DATA_PATH=~/cvs/gdcmData/
+export PYTHONPATH=~/cvs/gdcmbin/bin:~/cvs/gdcmbin/
+

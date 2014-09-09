@@ -1,0 +1,91 @@
+***************************
+- CT/PET Links:
+[Correlating CT and PT series]
+http://groups.google.com/group/comp.protocols.dicom/browse_thread/thread/50bd859e0232a735/6040b545240c8fa4
+Quote:
+For completeness, there are three ways an application can
+correlate CT and PET (or other sets) using DICOM only:
+
+1) Code all the images with the same Frame of Reference UID.
+At least one major vendor does this now.
+
+2) Make assumptions based on specific implementation behavior
+based on data elements that match (e.g. perhaps Study Time, or
+matching values in the General Equipment Module).
+Without actual trial and experience verifying the correlation,
+I agree, that an assumption is not wise
+
+3) Use the recent Supplement 73 Spatial Registration Storage SOP Classes.
+This capability allows explicitly specifying the spatial transformation
+from one Frame of Reference to another. However, this supplement
+is probably too recent to be in use. 
+
+[Is there a SOP class for CT-PET images?]
+http://groups.google.com/group/comp.protocols.dicom/browse_thread/thread/bb96abb730624a8a/5a78f1ff0199a727
+
+[Everything you have always hated about the DICOM PET SOP Class, but were afraid to ask]
+http://groups.google.com/group/comp.protocols.dicom/browse_thread/thread/dc3a07d4999445ae/560fd0a064145d61
+
+[fMRI Dicom objects]
+http://groups.google.com/group/comp.protocols.dicom/browse_thread/thread/30897c138442daad/27382b21968ce0b3
+Quote:
+WG 17 is considering the matter of registration of images
+in 3D, including rigid (and probably non-rigid) body
+transformations. This effort has been prioritized over
+WG 17's other work on multi-dimensional representation
+as a consequence of the prevalence of PET-CT fusion
+applications. See:
+
+ftp://medical.nema.org/medical/dicom/supps/sup73_05.pdf
+broken link use instead: ftp://medical.nema.org/medical/dicom/final/sup73_ft4.pdf
+
+[4 PET/CT questions]
+http://groups.google.com/group/comp.protocols.dicom/browse_thread/thread/56d07d5686e2ec67/b4c131f3e711716f
+
+
+***************************
+- Spatial registration oriented:
+[Spatial Registration]
+http://groups.google.com/group/comp.protocols.dicom/browse_thread/thread/ab94a61d33082e29/d929474e92c30b24
+
+[presentation context ID]
+http://groups.google.com/group/comp.protocols.dicom/browse_thread/thread/a4bb2647d5a91001/d0fbff58a644ce7c
+
+***************************
+Adding comment by Doug Sluis (dsluis at clinical-knowledge.com)
+To your numbered questions:
+1.  Yes they are separate SOP Instances. (What is alternative?)
+2. Yes. (although the recent Spatial Registration SOP Class is a possible option)
+
+There is no guarantee that CT and PET slices are one-to-one or
+that the slices are spatially coincident. Attempts to spatially sort
+may not succeed.
+
+> I am trying to gather some information about CT-PET acquisition and how
+> to order/link slices together properly(*).
+>
+> 1. I understand there is not and there won't be any SOP Class for
+> CT-PET. But should we still consider this as two *independent* SOP
+> Class Instances ?
+>
+> 2. Image acquired in this dual modality *have* to have the same Frame
+> of Reference UID, right ?
+>
+> In this case I'll add the following strategy in gdcm to organize the
+> slices:
+>
+> 1. Open a DICOM file A
+> 2. Open another DICOM file B
+> 3. Same Serie/Study ?
+>  * No -> return
+>  * Yes -> continue
+> 4. Same Frame of Reference ?
+>  * No -> Return
+>  * Yes -> continue
+> 5 A is CT and B is PT ?
+>  * No -> return
+>  * Yes -> continue
+> 6 Same Image Position ?
+>  * No -> Return
+>  * Yes: We found a match !
+

@@ -1,0 +1,20 @@
+#include <iostream>
+
+struct MyException {
+   MyException() { std::cout << "In exception" << std::endl; }
+};
+
+void Thrower(void) {
+   throw MyException();
+}
+
+void MyWrappedFunction(void) {
+   try { Thrower(); }
+   catch (MyException){ std::cout<<"Exception caught in caller"<<std::endl; }
+}
+
+int main() {
+   MyWrappedFunction();
+  return 0;
+}
+

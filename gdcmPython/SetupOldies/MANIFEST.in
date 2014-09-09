@@ -1,0 +1,8 @@
+include *.py
+recursive-include src *.h
+include src/jpeg/libijg8/jconfig.linux
+include src/jpeg/libijg8/jconfig.vc
+recursive-include vtk *.h
+recursive-include Dicts *.dic
+recursive-include Test *.*
+include MANIFEST.in

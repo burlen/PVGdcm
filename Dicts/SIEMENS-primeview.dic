@@ -1,0 +1,9 @@
+0029 1032 UL 1 PMTFInformation2
+0029 1033 UL 1 PMTFInformation3
+0039 1078 CS 1 Site Name
+0039 1179 CS 1 Field Name
+0039 1280 CS 1 Field ID
+0039 1381 CS 1 Calibration Date
+0039 1477 IS 1 Number of Sub-Frames
+0039 1579 CS 1 Field Name
+

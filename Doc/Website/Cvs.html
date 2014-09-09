@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+   <META http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+   <TITLE>Gdcm access with cvs</TITLE>
+</HEAD>
+                                                                                
+<BODY>
+                                                                                
+<!#######################################################################>
+<H1>Using CVS for retrieval of gdcm</H1>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+<!#######################################################################>
+To learn more about CVS and to get the CVS programs, please refer to the
+<A HREF="http://ximbiot.com/cvs/manual/">CVS Home</A>. 
+
+<UL>
+  <LI><B>WARNING</B>
+    <UL>
+     To avoid troubles users who choose to work with gdcm CVS version are 
+     strongly recomended to have a look at the 
+     <a href="http://public.kitware.com/dashboard.php?name=gdcm">
+     gdcm dashboard </a> *before* doing a 'cvs update'. <br>
+
+    If there is too much red stuff: then DO NOT update.<br>
+    Wait a few days until gdcm stabilizes. <br>
+    If you like to take risk you can decide to update gdcm if the broken build
+    (red square in 'Build' column) only affect a different plateform than yours.
+     <br>
+    Example: If the dashboard is red *only* for the SunOS, and you are using
+    Windows there is a great chance that it would still work for you (also
+    this is not recommended). 
+  </UL>
+  <LI><B>General</B>
+    <UL>
+      <LI>Repository server: <tt>:pserver:anonymous@cvs.creatis.insa-lyon.fr:2402/cvs/public</tt>
+      <LI>Password is <TT>anonymous</TT>
+    </UL>
+  <LI><B>Linux</B>
+    <IMG src="Icons/os-linux.gif" alt="tux logo" nosave height=32 width=32>
+    (if your shell is not bash then please adapt the syntax)
+    <UL>
+      <LI><tt>export CVSROOT=:pserver:anonymous@cvs.creatis.insa-lyon.fr:2402/cvs/public</tt>
+      <LI><tt>cvs login</tt> (at prompt <TT>CVS password</TT> answer <TT>anonymous</TT>)
+      <LI><tt>cvs checkout gdcm</tt>
+    </UL>
+  <LI><B>Windows (WinCVS 1.2)</B>
+    <IMG src="Icons/os-windows.gif" alt="win95 logo" nosave height=32 width=32>
+    <UL>
+      <LI>Tag general - CVSROOT :
+        <tt>:pserver:anonymous@cvs.creatis.insa-lyon.fr:/cvs/public</tt>
+      <LI>Tag Ports - check 'For pserver' : <tt>2402</tt>
+    </UL>
+</UL>
+
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+</body>
+</html>
+

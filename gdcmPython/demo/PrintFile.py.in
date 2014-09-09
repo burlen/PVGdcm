@@ -1,0 +1,63 @@
+import sys
+import os.path
+from gdcmConfigDemo import *
+from gdcmPython.core import *
+
+def PrintUse():
+   print ""
+   print "Use :"
+   print "-----"
+   print "%s <fileName>" % sys.argv[0]
+   print "   fileName : path to the DICOM file to parse"
+   print ""
+   print ""
+
+try:
+   print gdcm.DataEntry
+   print gdcm.DataEntryPtr
+except:
+   pass
+
+### Get filename from command line or default it
+try:
+   fileName = sys.argv[1]
+except IndexError:
+   fileName = os.path.join(GDCM_DATA_ROOT, "test.acr")
+   if( not os.path.isfile(fileName) ):
+      fileName=os.path.join(os.path.split(sys.argv[0])[0],"test.acr")
+
+try:
+   printLevel = int(sys.argv[2])
+except IndexError:
+   printLevel = 1
+
+### Build the file element list
+file = gdcm.File.New()
+file.SetFileName(fileName)
+file.Load()
+if not file.IsReadable():
+   PrintUse()
+   raise RuntimeError,"The '%s' file is not readable with gdcm." % fileName
+
+print "File -->",fileName
+print "##############################################################"
+print "### Display all the elements and their respective values"
+print "## found in the ", fileName, " file."
+print "##############################################################"
+
+val=file.GetFirstEntry()
+while(val):
+   val.Print()
+   print ""
+   val=file.GetNextEntry()
+val=None
+
+print "##############################################################"
+val=file.GetFirstEntry()
+while(val):
+   if(isinstance(val,gdcm.DataEntry)):
+      print "Data %s [%s] [%s] : %s" % (val.GetKey().str(),val.GetVR().str(),
+                                        val.GetName(),val.GetString())
+   val=file.GetNextEntry()
+val=None
+

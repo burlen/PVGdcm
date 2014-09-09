@@ -1,0 +1,13 @@
+The reference for parsing dicom file is the dicom standard. A local copy
+can be found in DicomPart5.pdf. A nice starting point for browsing
+the standard can be found at http://www.dclunie.com/dicom-status/status.html.
+
+Documentation can be build with doxygen:
+* For the developpers version:
+  doxygen DoxyfileDeveloppers
+  mozilla html.developper/index.html
+
+* For the user version:
+  doxygen DoxyfileUsers
+  mozilla html.user/index.html
+

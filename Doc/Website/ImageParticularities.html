@@ -1,0 +1,370 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+   <META http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+   <TITLE>Image Particularities</TITLE>
+</HEAD>
+<BODY>
+<H2>Image Particularities :</H2>
+<UL>
+<p>
+
+
+Hereafter, the images, more or less grouped by 'particularities')
+(a single may appear more than once) 
+
+<pre>
+
+About Image Type
+================
+
+ACR-NEMA (very old) images
+--------
+SIEMENS_MAGNETOM-12-ACR_NEMA_2-Modern.dcm                    pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound  TransferSyntaxName= [Uncompressed ACR-NEMA]
+SIEMENS_GBS_III-16-ACR_NEMA_1.acr                            pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound  TransferSyntaxName= [Uncompressed ACR-NEMA]
+CT-MONO2-12-lomb-an2.acr                                     pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound  TransferSyntaxName= [Uncompressed ACR-NEMA]
+MR-MONO2-12-angio-an1.acr                                    pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound  TransferSyntaxName= [Uncompressed ACR-NEMA]
+gdcm-MR-SIEMENS-16-2.acr                                     pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound  TransferSyntaxName= [Uncompressed ACR-NEMA]
+
+ACR-NEMA (younger) images
+--------
+MR-MONO2-12-an2.acr                                          pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Uncompressed ACR-NEMA]
+SIEMENS_SOMATOM-12-ACR_NEMA-ZeroLengthUs.acr                 pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Uncompressed ACR-NEMA]
+OT-MONO2-8-a7.dcm                                            pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Uncompressed ACR-NEMA]
+FUJI-10-MONO1-ACR_NEMA_2.dcm                                 pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [Uncompressed ACR-NEMA]
+US-IRAD-NoPreambleStartWith0005.dcm                          pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Uncompressed ACR-NEMA]
+US-IRAD-NoPreambleStartWith0003.dcm                          pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Uncompressed ACR-NEMA]
+KODAK-12-MONO1-Odd_Terminated_Sequence.dcm                   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [Uncompressed ACR-NEMA]
+CR-MONO1-10-chest.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [Uncompressed ACR-NEMA]
+TOSHIBA_MRT150-16-MONO2-ACR_NEMA_2.dcm                       pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Uncompressed ACR-NEMA]
+OT-PAL-8-face.dcm                                            pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=1 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [Uncompressed ACR-NEMA]
+
+LibIDO (CREATIS 'ACR-NEMA like(?)' LibIDO format
+------
+--> Forget these ones (usefull for us, not for you)
+LIBIDO-8-ACR_NEMA-Lena_128_128.acr                           pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound  TransferSyntaxName= [Uncompressed ACR-NEMA]
+LIBIDO-16-ACR_NEMA-Volume.dcm                                pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound  TransferSyntaxName= [Uncompressed ACR-NEMA] SwapCode = 4321
+LIBIDO-24-ACR_NEMA-Rectangle.dcm                             pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound  TransferSyntaxName= [Uncompressed ACR-NEMA] 
+gdcm-ACR-LibIDO.acr                                          pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound  TransferSyntaxName= [Uncompressed ACR-NEMA]
+
+DICOM V3
+--------
+All the other ones
+
+About Physical Implementation (Only the images holding unusual characteristics are reported) 
+=============================
+
+BIG-ENDIAN
+----------
+LIBIDO-16-ACR_NEMA-Volume.dcm                               pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound   TransferSyntaxName= [Uncompressed ACR-NEMA] SwapCode = 4321
+US-RGB-8-epicard.dcm                                        pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 Photom.Interp.=RGB             TransferSyntaxName= [Explicit VR - Big Endian] SwapCode = 4321
+
+BITS-ALLOCATED=12
+-----------------
+MR-MONO2-12-angio-an1.acr                                   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound   TransferSyntaxName= [Uncompressed ACR-NEMA] 
+
+BITS-ALLOCATED=24
+-----------------
+LIBIDO-24-ACR_NEMA-Rectangle.dcm                            pixelType=8U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound    TransferSyntaxName= [Uncompressed ACR-NEMA] 
+
+
+SIGNED PIXELS
+-------------
+MR-MONO2-16-head.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+CT-MONO2-16-chest.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+PICKER-16-MONO2-No_DicomV3_Preamble.dcm                      pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+D_CLUNIE_MR1_JPLL.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+CT-MONO2-16-ankle.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+D_CLUNIE_MR3_RLE.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_MR1_RLE.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_NM1_JPLL.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_NM1_RLE.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+CT-MONO2-16-ort.dcm                                          pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+D_CLUNIE_CT1_JPLL.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_CT2_JPLL.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_CT2_RLE.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+012345.002.050.dcm                                           pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+CT-MONO2-16-brain.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Explicit VR - Little Endian]
+D_CLUNIE_MR3_JPLL.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+GE_RHAPSODE-16-MONO2-JPEG-Fragments.dcm                      pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+GE_GENESIS-16-MONO2-Uncompressed-UnusualVR.dcm               pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Explicit VR - Little Endian]
+D_CLUNIE_CT1_RLE.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+GE_GENESIS-16-MONO2-WrongLengthItem.dcm                      pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+
+IMPLICIT VALUE REPRESENTATION
+-----------------------------
+MR-MONO2-16-head.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+CT-MONO2-8-abdo.dcm                                          pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+PICKER-16-MONO2-Nested_icon.dcm                              pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian] Icon Image Sequence
+PICKER-16-MONO2-No_DicomV3_Preamble.dcm                      pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+XA_GE_DLX_xadc.dcm                                           pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR Big Endian DLX (G.E Private)]
+CT-MONO2-16-ankle.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+GE_DLX-8-MONO2-Multiframe.dcm                                pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+SIEMENS_MAGNETOM-12-MONO2-FileSeq2.dcm                       pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+PHILIPS_Gyroscan-8-MONO2-Odd_Sequence.dcm                    pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+SIEMENS_MAGNETOM-12-MONO2-FileSeq3.dcm                       pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+SIEMENS_MAGNETOM-12-MONO2-FileSeq1.dcm                       pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+SIEMENS_MAGNETOM-12-MONO2-FileSeq0.dcm                       pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+CT-MONO2-16-ort.dcm                                          pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+GE_DLX-8-MONO2-PrivateSyntax.dcm                             pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR Big Endian DLX (G.E Private)]
+THERALYS-12-MONO2-Uncompressed-E_Film_Template.dcm           pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+GE_GENESIS-16-MONO2-WrongLengthItem.dcm                      pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+THERALYS-12-MONO2-Uncompressed-Even_Length_Tag.dcm           pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian]
+
+GE_DLX-8-MONO2-PrivateSyntax.dcm                             pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR Big Endian DLX (G.E Private)]
+
+WRITTEN ON A 'BIG ENDIAN' PROCESSOR BASED COMPUTER
+--------------------------------------------------
+LIBIDO-16-ACR_NEMA-Volume.dcm                                pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=gdcm::Unfound  TransferSyntaxName= [Uncompressed ACR-NEMA] SwapCode = 4321
+US-RGB-8-epicard.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Big Endian] SwapCode = 4321
+
+About Color Representation  (Only the images holding unusual characteristics are reported)
+==========================
+
+MONOCHROME1 (low values = bright)
+-----------
+FUJI-10-MONO1-ACR_NEMA_2.dcm                                 pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [Uncompressed ACR-NEMA]
+KODAK-12-MONO1-Odd_Terminated_Sequence.dcm                   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [Uncompressed ACR-NEMA]
+D_CLUNIE_RG1_RLE.dcm                                         pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_RG3_JPLY.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+D_CLUNIE_RG3_RLE.dcm                                         pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_RG1_JPLL.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_RG3_JPLL.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+CR-MONO1-10-chest.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [Uncompressed ACR-NEMA]
+
+PALETTE COLOR
+-------------
+ - With Palette Color Lookup Tables : 8 Bits per Pixel
+ ----------------------------------
+LEADTOOLS_FLOWERS-8-PAL-Uncompressed.dcm                     pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=2 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [Explicit VR - Little Endian]
+LEADTOOLS_FLOWERS-8-PAL-RLE.dcm                              pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=2 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [RLE Lossless]
+US-PAL-8-10x-echo.dcm                                        pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [RLE Lossless]
+OT-PAL-8-face.dcm                                            pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=1 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [Uncompressed ACR-NEMA]
+
+ - With Palette Color Lookup Tables : 16 Bits per Pixel
+ ----------------------------------
+rle16sti.dcm                                                 pixelType=16U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [RLE Lossless]                              
+rle16loo.dcm                                                 pixelType=16U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [RLE Lossless]
+
+ - With Segmented Palette Color Lookup Tables : 16 Bits Per Pixel
+ --------------------------------------------
+gdcm-US-ALOKA-16.dcm                                         pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [Implicit VR - Little Endian]
+
+  - With 'Grey' LUT Data
+  ----------------------
+KODAK-12-MONO1-Odd_Terminated_Sequence.dcm                   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [Uncompressed ACR-NEMA]
+ 
+RGB
+---
+LEADTOOLS_FLOWERS-24-RGB-Uncompressed.dcm                    pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Little Endian]
+DermaColorLossLess.dcm                                       pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+US-RGB-8-esopecho.dcm                                        pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Little Endian]
+D_CLUNIE_VL2_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+SIEMENS-MR-RGB-16Bits.dcm                                    pixelType=16U Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Little Endian]
+D_CLUNIE_VL1_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_VL4_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_US1_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+LEADTOOLS_FLOWERS-24-RGB-JpegLossless.dcm                    pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_VL3_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+US-RGB-8-epicard.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Big Endian] SwapCode = 4321
+D_CLUNIE_VL6_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+GE_LOGIQBook-8-RGB-HugePreview.dcm                           pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Little Endian]
+LEADTOOLS_FLOWERS-24-RGB-JpegLossy.dcm                       pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [JPEG Baseline (Process 1)]
+
+YBR_FULL_422
+------------
+US-GE-4AICL142.dcm                                           pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=YBR_FULL_422   TransferSyntaxName= [JPEG Baseline (Process 1)]
+
+YBR_FULL
+--------
+ACUSON-24-YBR_FULL-RLE.dcm                                   pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 Photom.Interp.=YBR_FULL       TransferSyntaxName= [RLE Lossless]
+ACUSON-24-YBR_FULL-RLE-b.dcm                                 pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 Photom.Interp.=YBR_FULL       TransferSyntaxName= [RLE Lossless]
+
+PLANAR CONFIGURATION=2
+----------------------
+LEADTOOLS_FLOWERS-8-PAL-Uncompressed.dcm                     pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=2 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [Explicit VR - Little Endian]
+LEADTOOLS_FLOWERS-8-PAL-RLE.dcm                              pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=2 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [RLE Lossless]
+
+PLANAR CONFIGURATION=1
+----------------------
+LEADTOOLS_FLOWERS-8-MONO2-Uncompressed.dcm                   pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=1 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Explicit VR - Little Endian]
+OT-PAL-8-face.dcm                                            pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=1 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [Uncompressed ACR-NEMA]
+ACUSON-24-YBR_FULL-RLE.dcm                                   pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 Photom.Interp.=YBR_FULL       TransferSyntaxName= [RLE Lossless]
+ACUSON-24-YBR_FULL-RLE-b.dcm                                 pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 Photom.Interp.=YBR_FULL       TransferSyntaxName= [RLE Lossless]
+US-RGB-8-epicard.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Big Endian] SwapCode = 4321
+
+PLANAR CONFIGURATION=0 (Only 'Samples Per Pixel = 3' are reported) 
+----------------------
+LEADTOOLS_FLOWERS-24-RGB-Uncompressed.dcm                    pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Little Endian]
+DermaColorLossLess.dcm                                       pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+US-RGB-8-esopecho.dcm                                        pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Little Endian]
+D_CLUNIE_VL2_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+SIEMENS-MR-RGB-16Bits.dcm                                    pixelType=16U Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Little Endian]
+D_CLUNIE_VL1_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_VL4_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_US1_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+LEADTOOLS_FLOWERS-24-RGB-JpegLossless.dcm                    pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_VL3_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_VL6_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+US-GE-4AICL142.dcm                                           pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=YBR_FULL_422   TransferSyntaxName= [JPEG Baseline (Process 1)]
+GE_LOGIQBook-8-RGB-HugePreview.dcm                           pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Little Endian]
+LEADTOOLS_FLOWERS-24-RGB-JpegLossy.dcm                       pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [JPEG Baseline (Process 1)]
+
+About Compression mode :
+======================
+
+RLE Lossless
+------------
+US-PAL-8-10x-echo.dcm                                        pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [RLE Lossless]
+LEADTOOLS_FLOWERS-8-PAL-RLE.dcm                              pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=2 Photom.Interp.=PALETTE COLOR  TransferSyntaxName= [RLE Lossless]
+ACUSON-24-YBR_FULL-RLE.dcm                                   pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 Photom.Interp.=YBR_FULL       TransferSyntaxName= [RLE Lossless]
+ACUSON-24-YBR_FULL-RLE-b.dcm                                 pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 Photom.Interp.=YBR_FULL       TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_VL2_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_VL1_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_VL4_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_US1_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_VL3_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_VL6_RLE.dcm                                         pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_SC1_RLE.dcm                                         pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_MR2_RLE.dcm                                         pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_RG2_RLE.dcm                                         pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+ALOKA_SSD-8-MONO2-RLE-SQ.dcm                                 pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_MR3_RLE.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_MR1_RLE.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_NM1_RLE.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+LEADTOOLS_FLOWERS-16-MONO2-RLE.dcm                           pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_CT2_RLE.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_XA1_RLE.dcm                                         pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_CT1_RLE.dcm                                         pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_MR4_RLE.dcm                                         pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_RG1_RLE.dcm                                         pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [RLE Lossless]
+D_CLUNIE_RG3_RLE.dcm                                         pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [RLE Lossless]
+
+JPEG Baseline (Process 1)
+-------------------------
+LEADTOOLS_FLOWERS-8-MONO2-JpegLossy.dcm                      pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Baseline (Process 1)]
+US-GE-4AICL142.dcm                                           pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=YBR_FULL_422   TransferSyntaxName= [JPEG Baseline (Process 1)]
+LEADTOOLS_FLOWERS-24-RGB-JpegLossy.dcm                       pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [JPEG Baseline (Process 1)]
+
+JPEG Extended (Process 2 & 4)
+----------------------------
+D_CLUNIE_NM1_JPLY.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+gdcm-JPEG-Extended-Allready_present.dcm                      pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+PHILIPS_Gyroscan-12-Jpeg_Extended_Process_2_4.dcm            pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+SIEMENS-12-Jpeg_Process_2_4-Lossy-a.dcm                      pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+D_CLUNIE_XA1_JPLY.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+D_CLUNIE_SC1_JPLY.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+D_CLUNIE_RG2_JPLY.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+D_CLUNIE_MR4_JPLY.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+D_CLUNIE_RG3_JPLY.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+D_CLUNIE_MR3_JPLY.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+D_CLUNIE_MR1_JPLY.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+D_CLUNIE_MR2_JPLY.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Extended (Process 2 & 4)]
+
+JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])
+----------------------------------------------------------------------------------------
+RadBWLossLess.dcm                                            pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+CT-MONO2-16-chest.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+00191113.dcm                                                 pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+DermaColorLossLess.dcm                                       pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+LEADTOOLS_FLOWERS-16-MONO2-JpegLossless.dcm                  pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_MR1_JPLL.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+MARCONI_MxTWin-12-MONO2-JpegLossless-ZeroLengthSQ.dcm        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])] Icon Image Sequence
+gdcm-JPEG-LossLessThoravision.dcm                            pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_NM1_JPLL.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+XA-MONO2-8-12x-catheter.dcm                                  pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+LEADTOOLS_FLOWERS-24-RGB-JpegLossless.dcm                    pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_CT1_JPLL.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_CT2_JPLL.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_RG2_JPLL.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+012345.002.050.dcm                                           pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_MR3_JPLL.dcm                                        pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+GE_RHAPSODE-16-MONO2-JPEG-Fragments.dcm                      pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_RG1_JPLL.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_RG3_JPLL.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME1    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_MR4_JPLL.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_MR2_JPLL.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+PHILIPS_Gyroscan-12-MONO2-Jpeg_Lossless.dcm                  pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+D_CLUNIE_XA1_JPLL.dcm                                        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+gdcm-JPEG-LossLess3a.dcm                                     pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+3E768EB7.dcm                                                 pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])]
+
+
+Other Unusual Stuff
+===================
+
+WITH ICON
+---------
+
+PICKER-16-MONO2-Nested_icon.dcm                              pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Implicit VR - Little Endian] Icon Image Sequence
+MARCONI_MxTWin-12-MONO2-JpegLossless-ZeroLengthSQ.dcm        pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])] Icon Image Sequence
+CT-SIEMENS-Icone-With-PaletteColor.dcm                       pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Photom.Interp.=MONOCHROME2    TransferSyntaxName= [Explicit VR - Little Endian] Icon Image Sequence
+
+- in A Private Sequence
+GE_LOGIQBook-8-RGB-HugePreview.dcm                           pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 Photom.Interp.=RGB            TransferSyntaxName= [Explicit VR - Little Endian]
+
+
+
+WITH TRAILING INFORMATION
+------------------------
+ACUSON-8-YBR_FULL-JPEG-TrailingInfo.dcm               Photom.Interp.=YBR_FULL_422 pixelType=8U Smpl.P.Pix.=3 Plan.Config.=0 TransferSyntaxName= [JPEG Baseline (Process 1)] 
+US-GE-4AICL142.dcm                                    Photom.Interp.=YBR_FULL_422 pixelType=8U Smpl.P.Pix.=3 Plan.Config.=0 TransferSyntaxName= [JPEG Baseline (Process 1)] 
+GE_LOGIQBook-8-RGB-HugePreview.dcm                    Photom.Interp.=RGB          pixelType=8U Smpl.P.Pix.=3 Plan.Config.=0 TransferSyntaxName= [Explicit VR - Little Endian] 
+
+
+WITH SEQUENCE
+-------------
+gdcm-US-ALOKA-16.dcm                                  Photom.Interp.=PALETTE COLOR pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Implicit VR - Little Endian] 
+gdcm-JPEG-Extended.dcm                                Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [JPEG Extended (Process 2 & 4)] 
+gdcm-MR-PHILIPS-16-NonRectPix.dcm                     Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Explicit VR - Little Endian] 
+XA_GE_DLX_xadc.dcm                                    Photom.Interp.=MONOCHROME2   pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Implicit VR Big Endian DLX (G.E Private)] 
+ACUSON-24-YBR_FULL-RLE.dcm                            Photom.Interp.=YBR_FULL      pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 TransferSyntaxName= [RLE Lossless] 
+ACUSON-24-YBR_FULL_422-Jpeg_Baseline_1.dcm            Photom.Interp.=YBR_FULL_422  pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 TransferSyntaxName= [JPEG Baseline (Process 1)] 
+gdcm-JPEG-Extended-Allready_present.dcm               Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [JPEG Extended (Process 2 & 4)] 
+PHILIPS_Gyroscan-8-MONO2-Odd_Sequence.dcm             Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Implicit VR - Little Endian] 
+PHILIPS_Gyroscan-12-Jpeg_Extended_Process_2_4.dcm     Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [JPEG Extended (Process 2 & 4)] 
+ACUSON-8-YBR_FULL-JPEG-TrailingInfo.dcm               Photom.Interp.=YBR_FULL_422  pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=0 TransferSyntaxName= [JPEG Baseline (Process 1)] 
+PHILIPS_Intera-16-MONO2-Uncompress.dcm                Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Explicit VR - Little Endian] 
+KODAK-12-MONO1-Odd_Terminated_Sequence.dcm            Photom.Interp.=MONOCHROME1   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Uncompressed ACR-NEMA] 
+ACUSON-24-YBR_FULL-RLE-b.dcm                          Photom.Interp.=YBR_FULL      pixelType=8U  Smpl.P.Pix.=3 Plan.Config.=1 TransferSyntaxName= [RLE Lossless] 
+CT-SIEMENS-Icone-With-PaletteColor.dcm                Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Explicit VR - Little Endian] Icon Image Sequence
+SIEMENS_Sonata-12-MONO2-SQ.dcm                        Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Explicit VR - Little Endian] 
+GE_DLX-8-MONO2-Multiframe-Jpeg_Lossless.dcm           Photom.Interp.=MONOCHROME2   pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])] 
+GE_RHAPSODE-16-MONO2-JPEG-Fragments.dcm               Photom.Interp.=MONOCHROME2   pixelType=16S Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])] 
+SIEMENS_Sonata-16-MONO2-Value_Multiplicity.dcm        Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Explicit VR - Little Endian] 
+PHILIPS_Gyroscan-12-MONO2-Jpeg_Lossless.dcm           Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])] 
+gdcm-JPEG-LossLess3a.dcm                              Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])] 
+3E768EB7.dcm                                          Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])] 
+PHILIPS_Integris_V-10-MONO2-Multiframe.dcm            Photom.Interp.=MONOCHROME2   pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Implicit VR - Little Endian] 
+
+==>These ones are *really* unusual :
+- SQ with length=0
+MARCONI_MxTWin-12-MONO2-JpegLossless-ZeroLengthSQ.dcm Photom.Interp.=MONOCHROME2  pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [JPEG Lossless, Non-Hierarchical, First-Order Prediction(Process 14 [Selection Value 1])] Icon Image Sequence
+- 134 SQ Items :
+PICKER-16-MONO2-Nested_icon.dcm                       Photom.Interp.=MONOCHROME2  pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 Icon Image Sequence TransferSyntaxName= [Implicit VR - Little Endian] 
+- 7 level embedded Sequence
+gdcm-MR-PHILIPS-16-Multi-Seq.dcm                      Photom.Interp.=MONOCHROME2  pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Explicit VR - Little Endian] 
+ - 437 SQ Items in a trailing sequence
+US-GE-4AICL142.dcm                                    Photom.Interp.=YBR_FULL_422 pixelType=8U Smpl.P.Pix.=3 Plan.Config.=0 TransferSyntaxName= [JPEG Baseline (Process 1)] 
+GE_LOGIQBook-8-RGB-HugePreview.dcm                    Photom.Interp.=RGB  pixelType=8U Smpl.P.Pix.=3 Plan.Config.=0 TransferSyntaxName= [Explicit VR - Little Endian] 
+
+
+WITH OVERLAY
+------------
+SIEMENS_GBS_III-16-ACR_NEMA_1.acr                     Photom.Interp.=gdcm::Unfound pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Uncompressed ACR-NEMA] 
+LEADTOOLS_FLOWERS-8-MONO2-Uncompressed.dcm            Photom.Interp.=MONOCHROME2   pixelType=8U Smpl.P.Pix.=1 Plan.Config.=1 TransferSyntaxName= [Explicit VR - Little Endian] 
+
+
+PIXEL SPACING
+-------------
+
+[0.000\0.000]
+D_CLUNIE_RG1_RLE.dcm                                  Photom.Interp.=MONOCHROME1  pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [RLE Lossless] 
+[0.2\0\0.200000]
+CT-MONO2-8-abdo.dcm                                   Photom.Interp.=MONOCHROME2  pixelType=8U  Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Implicit VR - Little Endian] 
+[ 0.487416\0.194966]
+gdcm-MR-PHILIPS-16-NonRectPix.dcm                     Photom.Interp.=MONOCHROME2  pixelType=16U Smpl.P.Pix.=1 Plan.Config.=0 TransferSyntaxName= [Explicit VR - Little Endian] 
+[1.25]
+</pre>
+ <br><br>JPRx
+<BODY>

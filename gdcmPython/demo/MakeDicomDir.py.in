@@ -1,0 +1,62 @@
+import sys
+import os.path
+from gdcmConfigDemo import *
+from gdcmPython.core import *
+
+def PrintUse():
+   print ""
+   print "Use :"
+   print "-----"
+   print "%s" % sys.argv[0]
+   print "   Create the DicomDir from the GDCM_DATA_ROOT path"
+   print ""
+   print ""
+
+### Progress methods
+def startMethod():
+   print "Start"
+def progressMethod():
+   print "Progress",dicomdir.GetProgress()
+def endMethod():
+   print "End"
+
+### Get filename from command line or default it
+try:
+   fileName = sys.argv[1]
+except IndexError:
+   fileName = os.path.join(GDCM_DATA_ROOT, "DICOMDIR")
+   if( not os.path.isfile(fileName) ):
+      fileName=os.path.join(os.path.split(sys.argv[0])[0],"DICOMDIR")
+
+try:
+   printLevel = int(sys.argv[2])
+except IndexError:
+   printLevel = 1
+
+### Build the DicomDir element list
+dicomdir = gdcm.DicomDir.New()
+
+cmd=gdcm.CommandPy.New()
+cmd.SetCallback(startMethod)
+gdcm.CommandManager.SetCommand(dicomdir,gdcm.CMD_STARTPROGRESS,cmd)
+cmd=gdcm.CommandPy.New()
+cmd.SetCallback(endMethod)
+gdcm.CommandManager.SetCommand(dicomdir,gdcm.CMD_ENDPROGRESS,cmd)
+cmd=gdcm.CommandPy.New()
+cmd.SetCallback(progressMethod)
+gdcm.CommandManager.SetCommand(dicomdir,gdcm.CMD_PROGRESS,cmd)
+
+dicomdir.SetDirectoryName(GDCM_DATA_ROOT)
+dicomdir.Load()
+if not dicomdir.IsReadable():
+   PrintUse()
+   raise RuntimeError,"The '%s' DicomDir is not readable with gdcm." % fileName
+
+print "DICOMDIR -->",fileName
+print "##############################################################"
+print "## Display all the elements and their respective values"
+print "## found in the ", fileName, " file."
+print "##############################################################"
+dicomdir.SetPrintLevel(-1)
+dicomdir.Print()
+

@@ -1,0 +1,27 @@
+(0019, 1108) patient position (HF or FF).
+(0019, 1109) From where I am looking at the patient (VFF or VFH).
+(0019, 110A) patient position (SU, PR, etc.)
+(0019, 110B) Location.
+(0019, 110C) Scano View Direction. (VSR=View Scano Reverse, or VSN = View Scano Normal).
+(7019,xx71) TOSHIBA_MEC_OT3 Indicator of creator CS 1
+(7019,xx72) TOSHIBA_MEC_OT3 ID of quality assurance reviewer LO 1
+(7019,xx73) TOSHIBA_MEC_OT3 Name of quality assurance reviewer PN 1
+(7019,xx74) TOSHIBA_MEC_OT3 Date of completion of quality assurance DA 1
+(7019,xx75) TOSHIBA_MEC_OT3 Time of completion of quality assurance TM 1
+(7019,xx76) TOSHIBA_MEC_OT3 Host name of quality assurance station LO 1
+(7019,xx77) TOSHIBA_MEC_OT3 Station name and version of quality assurance station CS 1
+(7019,xx78) TOSHIBA_MEC_OT3 Flag of completion of quality assurance CS 1
+(7019,xx79) TOSHIBA_MEC_OT3 Status of quality assurance review CS 1
+(7019,xx7A) TOSHIBA_MEC_OT3 Original SOP Instance UID UI 1
+(7019,xx7B) TOSHIBA_MEC_OT3 Original Series Instance UID UI 1
+(7019,xx7C) TOSHIBA_MEC_OT3 Original Study Instance UID UI 1
+(7019,xx7D) TOSHIBA_MEC_OT3 Rotation information for image display from original image US 1
+(7019,xx7E) TOSHIBA_MEC_OT3 Sequence of LR mark SQ 1
+(7019,xx7F) TOSHIBA_MEC_OT3 Rotation status at creation of LR mark US 1
+(7019,xx80) TOSHIBA_MEC_OT3 Original image data on area of original LR mark OW or OB 1
+(7019,xx81) TOSHIBA_MEC_OT3 X start position of LR mark SS 1
+(7019,xx82) TOSHIBA_MEC_OT3 Y start position of LR mark SS 1
+(7019,xx83) TOSHIBA_MEC_OT3 Size of LR mark in X direction US 1
+(7019,xx84) TOSHIBA_MEC_OT3 Size of LR mark in Y direction US 1
+(7019,xx85) TOSHIBA_MEC_OT3 Previous Patient ID LO 1
+(7019,xx86) TOSHIBA_MEC_OT3 Previous modality CS 1

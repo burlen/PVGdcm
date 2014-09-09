@@ -1,0 +1,834 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+   <META http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+   <TITLE>Gdcm News</TITLE>
+</HEAD>
+
+<BODY>
+
+
+<!--#######################################################################-->
+<H1>Gdcm News</a></H1>
+
+<!--#######################################################################-->
+
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<H2>
+   <A CLASS="anchor" NAME="missing">
+      <B>Missing features</B></A>
+</H2>
+We know the following are missing; don't loose time looking for them ...<br>
+We know they could be helpfull. We shall add them some day.<br>
+Any contribution is welcome.
+<UL>
+<LI> Decoders   
+   <UL>
+      <LI> gdcm doesn't read yet <TT>JPEG-LS</TT> encoded files.
+      <UL>
+          We said '<TT>JPEG-LS</TT>', not <i>Lossless Jpeg </i>...<br>
+          [<TT>JPEG-LS</TT> is the basis for new lossless/near-lossless compression
+          standard for continuous-tone images intended for <TT>JPEG2000</TT>. 
+          The standard is based on the LOCO-I algorithm 
+          (LOw COmplexity LOssless COmpression for Images) 
+          developed at Hewlett-Packard Laboratories] 
+     </UL>
+      <LI> gdcm doesn't read yet <TT>MPEG2</TT> encoded files.
+
+   </UL>
+   <LI>Reader
+   <UL>
+      <LI> Allow user to tell <TT>gdcm::Document</TT> constructor he just wants 
+           to load a given list of <TT>DocEntries</TT> 
+           (to save CPU time and RAM space)
+      <LI> Allow 'frame by frame' reading (should be helpfull for huge 
+           multiframe images)
+      <LI> Allow subvolume selection / frames selection before reading.
+      <LI> Expose Read/Decompression mechanisms to allow user getting
+         information from <tt>DICOMDIR</TT> <br> -or from his own Data Base- 
+         and reading his images without parsing
+         the header, one more time.
+   </UL> 
+   <LI>Writer 
+   <UL> 
+      <LI> Allow user to tell the Writer he wants to split a
+           <TT>Multiframe</TT> image into a serie of 
+           <TT>Single frame</TT> images.
+      <LI> Allow user to tell the Writer he wants to agregate a
+           Serie of <TT>Single frame</TT> images into a
+           <TT>Multiframe</TT> image.
+   </UL>
+<LI>Reader / Writer 
+   <UL>  
+      <LI> Full <TT>Icon Image</TT> management (Read and Write) 
+      <LI> Full <TT>Overlays</TT> management (Read and Write) <br>
+           both for '<TT>ACR-NEMA</TT> style' (using groups <TT>0x6000</TT> 
+            and next) and '<TT>DICOM V3</TT> style' (using Sequences)
+   </UL>
+<LI> <TT>DICOMDIR</TT> 
+    <UL>
+      <LI> <TT>DICOMDIR</TT> full management (not limited to
+           <TT> PATIENT</TT>/<TT>STUDY</TT>/<TT>SERIE</TT>/<TT>IMAGE</TT>)
+      <LI> Allow user to add an entry (belonging to the file header Dicom
+           entries) to the default entry list, before
+           making a <TT>DICOMDIR</TT> from a root directory
+      <LI> Allow user to add an entry of his own (for instance an <TT>Icon</TT>
+           to each image, or to each Serie).  
+      </UL>
+<LI> SerieHelper
+   <UL>
+
+      <LI> An accurate <TT>SerieHelper</TT> <br>
+           Right now <TT>SerieHelper</TT> only works on 'bona fide Series', and
+           breaks on wrongly forged Series.<br>
+           We are still looking for any heuristics...  
+      <LI> A <TT>SerieHelper</TT> that would use the <TT>DICOMDIR</TT> (if any)
+        instead of parsing all the files within the Root Directory
+   </UL>
+<LI> Other
+   <UL>
+      <LI> 16-bits-LUT full Management
+      <LI> User friendly management of <TT>Rescale Slope</TT> and
+           <TT>Rescale Intercept</TT>.<br>
+           (Well... Maybe it's up to the application to deal with it, not to
+           gdcm ?)
+      <LI> Allow manual adjunction / automatic recognition (pfff!...)
+           of the private <TT>Dicom Dictionary</TT>
+           to be used to parse <TT>Shadow groups</TT> against.
+      <LI> User friendly way of anonymizing image when Patient's name is
+           burnt-in within the Pixels :-(  <br>
+           --> In many cases, the burnt-in Patient's name, etc
+               are actually stored as 'overlays'.<br>
+              'Normal' reading doesn't load those type of overlays.
+   </UL>
+</UL>
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<H2>
+   <A CLASS="anchor" NAME="NewsCurrentVersion">
+   <B>Current Version (CVS) : gdcm1.3.2 </B></A>
+      <B></B></A>
+</H2>
+
+<UL>
+   <LI> <A HREF="News.html#missing">Missing Features</a>
+   <LI>Differences between <b>gdcm 1.3.1</b> and <b>gdcm 1.3.2</b>
+   <UL>
+       <LI> Uncorrect reading/writting of JPEG/JPE2000 images when
+       BitsAllocated=16/BitsStored=8
+       <LI> Uncorrect writing of JPEG/JPE2000 image with an 'Icon' Sequence
+       <LI> Uncorrect writting of JPE2000 multiframe images
+       <LI> Uncorrect writting of images with a DataElement belonging to group
+       0002, inside a Sequence
+       <LI> Uncorrect re-writting of Implicit Value Representation images with
+       'shadow groups' when Explicit Value Representation was asked
+       (unexpected swap to Implicit VR)
+   </UL>
+   If you experience troubles with gdcm-written images, check which
+   gdcm version was used (PrintFile filein=yourFileName.dcm)
+   
+   <LI>State of the art
+   <UL>    
+      <LI>
+         <a href="uml-gdcmV1.2.pdf">gdcm UML Class Diagram</a> current version.
+      <LI> <a href= "DocCVS/html.user/index.html">User Documentation</a>
+      <LI> <a href= "DocCVS/html.developper/index.html">Developper
+         Documentation</a> 
+   <LI> New Features
+   
+   <UL>
+      <LI> To be able to use gdcm1.3.x and ITK, developer is now allowed to
+      choose his own namespace for gdcm at CMake time : see GDCM_NAME_SPACE
+      option.
+      <LI> JPEG and JPEG2000 compression writting are now available.
+       see Examples/WriteDicomAsJPEG.cxx and Examples/WriteDicomAsJPEG2000.cxx
+      <LI> To <i>try to</i> make gdcm images PACS usable, user is now allowed to
+           gdcm what kind of image he wants to write, using :  <br>
+   <TT>void FileHelper::SetContentType (ImageContentType c);</TT> <br>
+   Four different types are identifyed (probabely more will be added) :
+      <UL> 
+         <LI>
+      1) user created ex nihilo his own image and wants to write it as a Dicom image.<br>
+          c : <TT>USER_OWN_IMAGE</TT>
+         <LI>
+      2) user modified the pixels of an existing image, using mathematical operations.<br>
+          c : <TT>FILTERED_IMAGE</TT>
+         <LI>
+      3) user created a new image, using existing images (eg MIP, MPR, cartography image)<br>
+          c : <TT>CREATED_IMAGE</TT>
+         <LI>
+       4) user modified/added some tags *without processing* the pixels (anonymization, etc)<br>
+         c : <TT>UNMODIFIED_PIXELS_IMAGE</TT> 
+      </UL>
+      <LI> Stupid difference between <TT>gdcm::ValEntry</TT> 
+           and <TT>gdcm::BinEntry</TT> removed. <br>
+           Only <TT>gdcm::DataEntry</TT> exist, now. 
+           Should have been considered as a 'Bug Fix'.<br>
+           Actually, it's an API breaking modification ...
+      <UL>
+         <LI>
+            <TT>std::string const &DataEntry::GetString() const</TT><br>
+            returns as a string (when possible) the value of the DataEntry
+         <LI>
+            <TT>void DataEntry::SetString(std::string const &value)</TT><br>
+             Sets the 'value' of a DataEntry, passed as a std::string 
+         <LI>
+            <TT>void DataEntry::SetBinArea( uint8_t *area, bool self ) </TT><br>
+             Sets the value (non string) of the current Dicom DataEntry
+         <LI>
+              <TT>void DataEntry::CopyBinArea( uint8_t *area, uint32_t length )</TT><br>
+               Inserts the value (non string) into the current DataEntry 
+         <LI>
+               <TT>void DataEntry::SetValue(const uint32_t &id, const double
+ &val)</TT><br>
+               Inserts the elementary (non string) value into the current
+               (multivaluated) DataEntry, at the <TT>id></TT> position.
+         <LI>
+               <TT>double DataEntry::GetValue(const uint32_t &id) const </TT><br>
+               returns, as a double one of the values (when entry is 
+               multivaluated), identified by its index <TT>id</TT>. 
+      </UL>
+      <LI> 
+   <TT>DocEntrySet::GetEntryValue()</TT> replaced by
+           <TT>DocEntrySet::GetEntryString()</TT> <br>
+      <LI> SerieHelper : <br>     
+           Add some methods, to split a 'SingleSerieUID' Fileset into 
+           'Extra Coherent'  FileSets. <br>
+           They return a std::map of 'Filesets' (actually : std::vector 
+           of gdcm::File*)<br>
+           The key is the 'Orientation', the 'Position' 
+           or the value of a user choosen 'Tag' <br>
+           -  <TT>XCoherentFileSetmap SplitOnOrientation(FileList *fileSet);
+              </TT><br>
+           -  <TT>XCoherentFileSetmap SplitOnPosition(FileList *fileSet);
+              </TT> <br>
+           -  <TT>XCoherentFileSetmap SplitOnTagValue(FileList *fileSet,
+                                       uint16_t group, uint16_t element);
+              </TT><br>
+           These methods must be called by user, depending on what he wants 
+           to do, at application time.- *he* only  knows what his Series 
+           contain !-
+      <LI> To avoid memory leaks and seg faults the user intended classes
+           use now a Reference Counter.<br>
+      <UL>
+         <LI> <TT>new()</TT> and <TT>delete()</TT> are replaced by
+              <TT>New()</TT> and <TT>Delete()</TT>
+         <LI> <TT>Register()</TT> and <TT>Unregister()</TT> methods are 
+         available.
+         <LI> --> Well ... People from ITK don't seem to agree too much with 
+             that feature.<br>
+          They demand to be allowed to allocate gdcm objects in the stack as
+          well, not only in the heap.
+      </UL>
+      <LI>
+   </UL>
+
+   <LI> API breaking modifications (since previous version)
+   <UL>
+      <LI> Stupid difference between <TT>gdcm::ValEntry</TT> 
+           and <TT>gdcm::BinEntry</TT> removed. <br>
+           Only <TT>gdcm::DataEntry</TT> exist, now. <br>  
+   <pre>
+   ValEntry(DictEntry *e);
+   BinEntry(DictEntry *e);
+-->DataEntry *New(uint16_t group,uint16_t elem, VRKey const &vr);
+
+   std::string const &ValEntry::GetValue() const;
+   std::string const &BinEntry::GetValue() const;
+-->std::string const &DataEntry::GetString() const;
+
+   uint8_t *BinEntry::GetBinArea();
+-->uint8_t *DataEntry::GetBinArea();
+
+   void ValEntry::SetValue(std::string const &value);
+   void BinEntry::SetValue(std::string const &value);   
+-->void DataEntry::SetString(std::string const &value);
+
+   void BinEntry::SetBinArea( uint8_t *area, bool self = true );
+-->void DataEntry::SetBinArea( uint8_t *area, bool self = true );
+
+   void ValEntry::CopyValEntry(uint16_t gr, uint16_t el);
+-->void DataEntry::CopyDataEntry(uint16_t gr, uint16_t el, VRKey const &vr);
+</pre>
+
+<pre>
+Example :
+
+old way :
+        DocEntry *p3 = item2->GetDocEntry(0x0018,0x0050);
+        if( !p3 ) return false;
+        ContentEntry *entry2 = dynamic_cast<ContentEntry *>(p3);
+        std::string thickness = entry2->GetValue();
+
+new way :
+        DocEntry *p3 = item2->GetDocEntry(0x0018,0x0050);
+        if( !p3 ) return false;
+        DataEntry *entry2 = dynamic_cast<DataEntry *>(p3);
+        std::string thickness = entry2->GetString();
+
+</pre>
+
+<LI> Avoid tons of CPU time consuming accesses to DICOM Dictionnary
+<pre>
+   DataEntry *FileHelper::CopyDataEntry(uint16_t group, uint16_t elem);
+-->DataEntry *FileHelper::CopyDataEntry(uint16_t group, uint16_t elem, 
+                                        const VRKey &vr = GDCM_VRUNKNOWN);
+
+   void FileHelper::CheckMandatoryEntry(uint16_t group, uint16_t elem, std::string value);
+-->void FileHelper::CheckMandatoryEntry(uint16_t group, uint16_t elem, std::string value,
+                                        const VRKey &vr = GDCM_VRUNKNOWN);
+      
+   void FileHelper::SetMandatoryEntry(uint16_t group, uint16_t elem, std::string value);       
+-->void FileHelper::SetMandatoryEntry(uint16_t group, uint16_t elem, std::string value,
+                                      const VRKey &vr = GDCM_VRUNKNOWN);
+
+   void FileHelper::CopyMandatoryEntry(uint16_t group, uint16_t elem, std::string value);      
+-->void FileHelper::CopyMandatoryEntry(uint16_t group, uint16_t elem, std::string value,
+                                       const VRKey &vr = GDCM_VRUNKNOWN);
+</pre>
+<LI> New features :
+<pre>
+For multivaluated numeric DataEntries
+-->void DataEntry::SetValue(const uint32_t &id,const double &val);
+-->double DataEntry::GetValue(const uint32_t &id) const;
+-->uint32_t DataEntry::GetValueCount() const;
+
+For converting 'Decimal String'
+-->bool GetDSValue(std::vector &lt;double&gt; &valueVector);  
+</pre>
+
+<LI> Avoid too many source file modifications from gdcm1.2 to gdcm1.3
+<pre>
+use :
+
+#define ValEntry                      DataEntry
+#define BinEntry                      DataEntry
+
+#define GetEntryValue(g,e)            GetEntryString(g,e)
+#define GetEntryForcedAsciiValue(g,e) GetEntryString(g,e)
+
+#define GetValEntry(g,e)              GetDataEntry(g,e)
+#define GetBinEntry(g,e)              GetDataEntry(g,e)
+#define GetValue()                    GetString()
+
+#define InsertValEntry(v,g,e,vr)      InsertEntryString(v,g,e,vr) // warning mind the VR!
+#define InsertBinEntry(b,l,g,e,vr)    InsertEntryBinArea(b,l,g,e,vr)
+
+#define SetValEntry(c,g,e)            SetEntryString(c,g,e)  | !!
+#define SetValEntry(c,en)             SetEntryString(c,en)   | !!
+
+#define SetBinEntry(c,l,en)           SetEntryBinArea(c,l,en)   | !!
+#define SetBinEntry(c,l,g,e)          SetEntryBinArea(c,l,g,e)  | !!
+
+#define NewValEntry(g,e,vr)           NewDataEntry(g,e,vr)
+#define NewBinEntry(g,e,vr)           NewDataEntry(g,e,vr)       
+
+</pre>
+   </UL> 
+      
+   <LI> Bug fixes
+   <UL>
+      <LI> Implicit VR - Big Endian (G.E Private) Transfert Syntax 16 Bits 
+           images are now read correctly.  
+      <LI> File::GetZOrigin() returns accurate result in any case.
+      <LI>
+      <LI>
+   </UL>
+   
+   <LI> Known Bugs
+   <UL>
+      <LI> Use of <TT>Implicit Value Representation</TT> writting mode may
+           causes troubles, when there are some <TT>SQ</TT> belonging to a 
+           <TT>Shadow Group</TT>. <br>
+           Better you use <TT>Explicit Value Representation</TT> writting mode ...
+      <LI> Troubles on 'Big endian' processors (i.e. Apple/Motorola, SunSparc
+           ...) when writting 16 Bits images.
+      <LI> Troubles on 64-bits processors.
+      <LI>
+      <LI>
+   </UL>
+ 
+      <br><br>
+ </UL>
+
+
+  
+<!#######################################################################>
+<A CLASS="anchor" NAME="NewsPreviousVersions">
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<H2>
+   <A CLASS="anchor" NAME="NewsVersion1_2">
+      <B>Version 1.2 </B></A>  
+</H2> 
+   <LI>State of the art
+   <UL>
+      <LI>
+         <a href="Doc1.0/uml-gdcmV1.0.pdf">gdcm 1.2 UML Class Diagram</a> version
+      (same as 1.1)
+      <LI> This is the Class Diagram of the version used within ITK.
+           (Hope we unify CVS version and ITK version, some day!)
+  
+<!#######################################################################>
+
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<H2>
+   <A CLASS="anchor" NAME="NewsVersion1_1">
+      <B>Version 1.1 (September 14 2005)</B></A>   
+</H2> 
+   <LI>State of the art
+   <UL>
+      <LI>
+         <a href="Doc1.0/uml-gdcmV1.0.pdf">gdcm 1.1 UML Class Diagram</a> version.
+      <LI> <a href= "Doc1.0/html.user/index.html">User Documentation</a>
+      <LI> <a href= "Doc1.0/html.developper/index.html">Developper
+         Documentation</a> 
+   <LI> New Features
+   <UL>
+      <LI> Add the methods
+         <TT>gdcm::Dict:AddDict(std::string fullPathPrivateDictionaryFileName)</TT>
+        <br>and<br> 
+        <TT>gdcm::Dict::RemoveDict(std::string fullPathPrivateDictionaryFileName)</TT>
+        <br>
+        to allow user to choose the 'Private Dictionary' he wants to work with.
+        <br>
+        One can dream about a better API;<br>
+        This one allow right now anybody to see very easyly if the use 
+        of a given private dicom dictionary is of any help or not.
+        <br><br>
+      <LI>
+      <TT>PrintFile</TT> has now a new command line argument manager option :<br>
+          <TT>dict=fullPathNamePrivateDictionaryFile</TT><br>
+          to allow user to see with no extra coding what differences 
+          makes the use or not of a private Dicom Dictionary.<br>
+          e.g. : use it as follow <br>
+          <TT>PrintFile filein=myGEdicomFile.dcm 
+          dict=/user/userName/gdcm/Dicts/GEMS-Advance.dic</TT>
+          <br><br> 
+      <LI>
+          (Not a great one ...)  
+          Stupid method names : <br><TT>DicomDir::WriteDicomDir()</TT>
+          and <TT>DicomDir::AnonymizeDicomDir()</TT> <br>replaced by : <br>
+          <TT>DicomDir::Write()</TT>
+          and <TT>DicomDir::Anonymize()</TT>
+          <br><br> 
+      <LI><TT>
+          void Document::AddForceLoadElement(uint16_t group, uint16_t elem);
+          </TT><br>
+          allows user to tell <TT>gdcm::Document</TT> Loader he wants
+          to force the loading of a given set of <TT>DocEntries</TT>, 
+          even if their length exceeds the current 
+          <TT>MAX_SIZE_LOAD_ELEMENT_VALUE</TT>.
+          <br><br>
+       <LI>
+          Many users expect from <TT>vtkGdcmReader</TT> it 'orders' the images
+          (that's the job of <TT>gdcm::SerieHelper</TT> ...)<br>
+          When user <b>knows</b> the files with same Serie UID
+          have same sizes, same 'pixel' type, same color convention, ...
+          the right way to proceed is as follow :
+    <pre>
+        gdcm::SerieHelper *sh= new gdcm::SerieHelper();
+   //      if user wants *not* to load some parts of the file headers
+        sh->SetLoadMode(loadMode);
+
+   //      if user wants *not* to load some files
+        sh->AddRestriction(group, element, value, operator);
+        sh->AddRestriction( ...
+        sh->SetDirectory(directoryWithImages);
+
+   //      if user *knows* how to order his files
+        sh->SetUserLessThanFunction(userSuppliedComparisonFunction);
+   //      or/and
+   //      if user wants to sort reverse order
+        sh->SetSortOrderToReverse();
+   
+   //      here, we suppose only the first 'Single SerieUID' Fileset is of interest
+   //      Just iterate using sh->NextSingleSerieUIDFileSet()
+   //      if you want to get all of them
+        gdcm::FileList *l = sh->GetFirstSingleSerieUIDFileSet();
+
+   //      if user is doesn't trust too much the files with same Serie UID
+        if ( !sh->IsCoherent(l) )
+           return; // not same sizes, or not same 'pixel type' -> stop
+
+        sh->OrderFileList(l);        // sort the list
+
+        vtkGdcmReader *reader = vtkGdcmReader::New();
+   //      if user wants to modify pixel order (Mirror, TopDown, ...)
+   //      he has to supply the function that does the job
+   //      (a *very* simple example is given in vtkgdcmSerieViewer.cxx)
+        reader->SetUserFunction (userSuppliedFunction);
+
+   //      to pass a 'Single SerieUID' Fileset as produced by gdcm::SerieHelper
+        reader->SetCoherentFileList(l);
+        reader->Update();
+   </pre>
+   You can see a full example in <TT>vtk/vtkgdcmSerieViewer.cxx</TT><br>
+   e.g.<br>
+
+   <TT>vtkgdcmSerieViewer dirname=Dentist  mirror</TT><br>
+   <TT>vtkgdcmSerieViewer dirname=Dentist  reverse</TT><br>
+   <TT>vtkgdcmSerieViewer dirname=Dentist  reverse topdown</TT><br> 
+   </pre>
+      <br>
+
+      <LI> <TT>vtkGdcmReader::SetUserFunction (userSuppliedFunction)</TT><br>
+           with :<br>
+           <TT>void userSuppliedFunction(uint8_t *imageData, File *f);</TT><br>
+           allows user to reorganize the pixels of each image just after reading
+           it (to mirror, or topdown the image, for instance)<br>
+           Note : <TT>uint8_t *</TT> doesn't mean it works only on 8 Bits images.
+           <br> It's for prototyping. Feel free to cast it.
+           <br><br>  
+      <LI> <TT>
+           SerieHelper::SetUserLessThanFunction(userSuppliedComparisonFunction)
+           </TT><br> with : <br>
+           <TT>bool userSuppliedComparisonFunction(File *, File *);</TT><br>
+           allows user -when he knows more about his files than gdcm does-
+           to give his own comparison function. 
+      <LI> <TT>SerieHelper::SetSortOrderToReverse</TT> allows user to ask
+           to sort the Files reverse order.
+      <LI> <TT>SerieHelper::AddRestriction</TT> has now a new constructor<br>
+           <TT>AddRestriction(group, element, value, operator);</TT><br>
+           allows user to exclude some files from the sorting, according to
+           any comparison operator <br>
+           (<TT>GDCM_EQUAL</TT>, <TT>GDCM_DIFFERENT</TT>, 
+           <TT>GDCM_GREATER</TT>, <TT>GDCM_GREATEROREQUAL</TT>, 
+           <TT>GDCM_LESS</TT>, <TT>GDCM_LESSOREQUAL</TT>), not only on the
+           equality.
+           <br><br>
+      <LI> <TT>AnonymizeNoLoad</TT> used with <TT>dirin=inputDirectoryName</TT>
+           anonymizes all the files within the given Directory.
+           <br>
+           User may also choose extra elements he wants to rub out: <br>
+           <TT>rubout=listOfElementsToRubOut</TT><br>
+           with <tt>listOfElementsToRubOut : group1-elem1,group2-elem2,
+           ...</TT> (in hexa, no space within the list )
+           <br><br>
+      <LI> <TT>gdcm::SerieHelper()</TT> has a new method 
+           <TT>void AddGdcmFile(File *header)</TT>, that allows aware user to 
+           create a '<TT>FileList</TT>' (actually a 
+           <TT>std::vector< File* > </TT>).<br>
+           The <TT>FileList</TT> created this way will be the 
+           'first one' in the <TT>gdcm::FileHelper()</TT> (retrieve it with 
+           <TT>FileList *GetFirstCoherentFileList()</TT> ).<br>
+           It may be sorted using <TT>OrderFileList</TT>.<br>
+           No 'coherence check' will be performed on this <TT>FileList</TT>
+           before sorting.<br>
+           It may be passed to a <TT>vtkGdcmReader</TT> 
+           (to avoid parsing twice the files)
+           <br><br>
+      <LI> <TT>vtkGdcmReader</TT> can now get the result of
+           <TT>gdcm::SerieHelper</TT> (to avoid parsing twice the files)<br>
+            Proceed as follow :<br>
+           <pre>
+           gdcmSerieHelper *sh = new gdcmSerieHelper();
+           sh->SetDirectory(myImageDirectory, true);
+           gdcmFileList *l = s->GetFirstCoherentFileList();
+           s->OrderFileList(l);
+
+           vtkGdcmReader *gr = new vtkGdcmReader();
+           gr->SetCoherentFileList(l);
+           gr->Update();  
+           </pre>
+           This works with a directory that contains only one '<TT>Serie</TT>'
+           (same <TT>Serie UID</TT> for all the images).<br>
+           If it contains more than one <TT>Serie</TT>, you'll have to loop 
+           on the Series, using <TT>GetNextCoherentFileList()</TT>;<br>
+           It will be up to the user to delete the <TT>gdcm::File</TT>.
+           <br><br>
+           See <TT>vtkgdcmSerieViewer</TT> for an example.
+           <br><br>
+      <LI> Both <TT>vtkgdcmViewer</TT> and <TT>vtkgdcmViewer2</TT> 
+           are available to allow easy displaying of single/multiframe 
+           GreyLevel/RGB/PaletteColor images<br><br>
+      <LI> <TT>DICOMDIR</TT> anonymiser (<TT>Load</TT> and <TT>Noload</TT> mode)
+           <br><br>
+      <LI> Because the <TT>gdcm::DicomDir::Load()</TT> method may be used
+           either for loading an already made <TT>DICOMDIR</TT> file or for
+           parsing all the dicom files with a given root directory we
+           syntaxically separated the operations: <br>
+           For loading an already made <TT>DICOMDIR</TT> file, use : <br>
+           <pre>
+           gdcm::DicomDir *d = new gdcm::DicomDir();
+           d->SetFileName(fileName);
+           d->Load( );  
+           </pre>
+ 
+           For parsing all the dicom files within a given root directory, use :<br>
+           <pre>
+           gdcm::DicomDir *d = new gdcm::DicomDir();
+           d->SetDirectoryName(dirName);
+           d->Load( )  
+           </pre>
+
+           <b>Don't</b> use any longer old deprecated style: <br>
+           <TT>
+           gdcm::DicomDir *d = new gdcm::DicomDir();<br>
+           d->SetParseDir(true);   // </TT>or <TT>d->SetParseDir(false);<br>
+           d->Load( fileName );<br>  
+           </TT>
+           <br> 
+      <LI> User is now allowed to tell <TT>gdcm::Document</TT> constructor 
+           he doesn't want to deal with <TT>SeqEntry</TT> 
+           (every time it's possible, i.e for 'true length' Sequences) <br>
+           and/or he doesn't want to deal with <TT>Shadow groups</TT> 
+           (every time it's possible i.e. when element <TT>0x0000</TT>
+           exists for this Group) <br> 
+           or he doesn't want to deal with <TT>SeqEntry</TT> that belong to a 
+           <TT>Shadow group</TT>  (every time it's possible 
+           -'true length' Sequence-)<br>
+           use : <br>
+           <pre>
+           gdcm::File *f = new gdcm::File();
+                  f->SetLoadMode(NO_SEQ);            | depending on what
+                  f->SetLoadMode(NO_SHADOW);         | you want *not* 
+                  f->SetLoadMode(NO_SEQ | NO_SHADOW);| to load from the
+                  f->SetLoadMode(NO_SHADOWSEQ);      | target file
+            f->SetFileName(fileName);
+            f->Load( );
+            </pre>
+            <b>Don't</b> use any longer old deprecated style: <br>
+            <TT>
+            gdcm::File *f = new gdcm::File(fileName);</TT> <br>
+            <br>
+        <LI> User is now allowed to tell <TT>gdcm::DicomDir</TT> constructor 
+             he doesn't want to deal with <TT>SeqEntry</TT> 
+             (every time it's possible, i.e for 'true length' Sequences) <br>
+             and/or he doesn't want to deal with <TT>Shadow groups</TT> 
+             (every time it's possible i.e. when element <TT>0x0000</TT>
+             exists for this Group) <br> 
+             or he doesn't want to deal with <TT>SeqEntry</TT> that belong to a 
+             <TT>Shadow group</TT>  (every time it's possible 
+             -'true length' Sequence-)<br>
+             when he parses all the Dicom files within a given directory.<br>
+             use : <br>
+             <pre>
+             gdcm::DicomDir *f = new gdcm::DicomDir();
+                  f->SetLoadMode(NO_SEQ);            | depending on what
+                  f->SetLoadMode(NO_SHADOW);         | you want *not* 
+                  f->SetLoadMode(NO_SEQ | NO_SHADOW);| to load from the files
+                  f->SetLoadMode(NO_SHADOWSEQ);      | within the root directory 
+             f->SetDirectoryName(rootDirectoryName);
+             f->Load( );
+            </pre>
+            <b>Don't</b> use any longer old deprecated style: <br>
+            <TT>
+            gdcm::DicomDir *dcmdir = new gdcm::DicomDir(dirName, true);</TT><br>
+            <br>         
+   </UL>
+
+   <LI> Bug fixes
+   <UL>
+      <LI> No more trouble when the 'endianess' switches within Sequences.
+      <LI> No more trouble with 'no length Sequences' belonging to a
+           <TT>Shadow Group</TT> when they are 'Implicit VR'.
+      <LI> The difference between <TT>MONOCHROME1</TT> (low values = bright,
+            high values = dark) and <TT>MONOCHROME2</TT> (low values = dark,
+            high values = bright) is now taken into account.<br> 
+            It's no longer up to the user to change the pixels value
+      <LI> Writing a 'True Dicom' image after reading an <TT>ACR-NEMA</TT> image 
+           does not request any longer from the user to build up 
+           'manually' the Meta Elements group (<TT>0x0002</TT>)
+      <LI> Old '24 Bits' <TT>ACR-NEMA</TT> are now correctly re-written
+           in <TT>DICOM V3</TT> mode.
+      <LI> Element <TT>0x0000</TT> of <TT>Shadow groups</TT> is always forced to be a
+           <TT>ValEntry</TT> and its <TT>VR</TT> is forced to <TT>UL</TT> 
+      <br><br>
+   </UL>
+
+   <LI> A.P.I. breaking modifications (since previous version : <TT>1.0</TT>)
+   <UL>    
+      <LI> NEVER more API breaking modifications !!!
+      <br><br>
+   </UL>
+
+   <LI> Known bugs
+   <UL>
+
+   </UL>
+
+</UL>
+
+
+
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<H2>
+   <A CLASS="anchor" NAME="NewsVersion1_0">
+      <B>Version 1.0 (Feb 14 2005)</B></A>
+</H2>
+<UL>
+   <LI>State of the art
+   <UL>
+      <LI>
+         <a href="Doc1.0/uml-gdcmV1.0.pdf">gdcm 1.0 UML Class Diagram</a> version.
+      <LI> <a href= "Doc1.0/html.user/index.html">User Documentation"</a>
+      <LI> <a href= "Doc1.0/html.developper/index.html">Developper
+         Documentation"</a>
+      <LI> Final check of the jpeg sub-library: all 'classical' jpeg
+        compressed Dicom files can be read<br>
+      <LI>All the previously gdcm-breaker images are now readable<br>
+      <LI> A huge number of memory leaks removed
+      <LI> Improvement of write process   
+   </UL>
+
+ 
+   <LI> A.P.I. breaking modifications (since previous version : <TT>0.6</TT>)
+   <UL>
+      <LI> Use of <TT> namespace</TT> : all the methods formerly named
+          <TT>className::gdcmXxx()</TT> are now named <TT>className::Xxx()</TT>
+          <br> End user will have to call them as <TT>gdcm::className::Xxx() </TT>
+      <LI> a <TT>gdcm::Document</TT> is now specialized in : 
+      <UL>
+         <LI> <TT>gdcm::DicomDir</TT>
+         <LI> <TT>gdcm::File</TT>
+      </UL>
+      <LI> a <TT>gdcm::DicomElementSet</TT> is composed of a set of 
+            <TT>gdcm::DicomDocEntry</TT>
+      <LI> a <TT>gdcm::DicomDocEntry</TT> can be :
+      <UL>
+         <LI> a <TT>gdcm::ContentEntry</TT>, specialized in :
+         <UL>
+            <LI> <TT>gdcm::ValEntry</TT>
+            <LI> <TT>gdcm::BinEntry</TT> (no longer a specialization of
+                 <TT>gdcm::ValEntry</TT>) 
+        </UL>
+      <LI> a <TT>gdcm::SeqEntry</TT> 
+      </UL>
+      <LI> Removal of useless accessors <TT>GetXxxByname</TT>, <TT>SetXxxByname</TT> 
+      <LI> Renaming of accessors <TT>GetXxxByNumber</TT>, <TT>SetXxxByNumber</TT> 
+           as follow :
+      <UL>
+         <LI> <TT>GetEntryByNumber 
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          --> GetEntryValue</TT>
+         <LI> <TT>GetEntryLengthByNumber  --> GetEntryLength</TT>
+         <LI> <TT>GetEntryOffsetByNumber  --> GetEntryOffset</TT>
+         <LI> <TT>GetEntryVRByNumber 
+                  &nbsp;&nbsp;&nbsp;      --> GetEntryVR</TT>
+         <LI>
+         <LI> <TT>GetDocEntryByNumber     
+                  &nbsp;&nbsp;            --> GetDocEntry</TT>
+         <LI> <TT>GetValEntryByNumber     
+                  &nbsp;&nbsp;            --> GetValEntry</TT>
+         <LI> <TT>GetBinEntryByNumber     
+                  &nbsp;&nbsp;            --> GetBinEntry</TT>
+         <LI> <TT>GetSeqEntryByNumber     
+                  &nbsp;&nbsp;            --> GetSeqEntry</TT>
+       </UL>
+   </UL>
+</UL>
+
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<H2>
+   <A CLASS="anchor" NAME="NewsVersion0_6">
+      <B>Version 0.6 (June 8 2004)</B></A>
+</H2>
+<UL>
+   This version will be used by Insight Tool Kit 
+   (<a href="http://www.itk.org">ITK</a> 2.0) at the beginning of 2005.<br>
+    It's not yet packaged ...<br><br>
+   <LI> <a href= "Doc0.6/html.user/index.html">User Documentation"</a>
+   <LI> <a href= "Doc0.6/html.developper/index.html">Developper Documentation"</a>  
+   <LI> The new <TT>gdcmDocument</TT> class is a parent class of 
+       <TT>gdcmHeader</TT> class and <TT>gdcmDicomDir</TT> class.
+   <LI> Massive modifications in the Class Diagram :
+   <UL>
+      <LI> any dicom related file is a <TT>gdcmDocument</TT>
+      <LI> a <TT>gdcmDocument</TT> can be :
+      <UL>
+         <LI> a <TT>gdcmHeader</TT>, if it contains pixel data
+         <LI> a <TT>gdcmDicomDir</TT>, if it contains only informations 
+              on the files in a given directory  
+      </UL>
+
+   <LI> a <TT>gdcmDocument</TT> is_a <TT>gdcmElementSet</TT>,
+        composed of a set of <TT>gdcmEntry</TT> separated into :
+      <UL>
+      <LI> <TT>gdcmValEntry</TT><br>
+           a specialization of <TT>gdcmValEntry</TT>, for 'non
+           <TT>std::string</TT> representable' values is 
+           <TT>gdcmBinEntry</TT> 
+       <LI> <TT>gdcmSeqEntry</TT> (VR = <TT>SQ</TT>, i.e Dicom Sequences)<br>
+             they are dealt as tree-like structures :<br>
+             - a <TT>gdcmSeqEntry</TT> is considered as a set 
+             of <TT>gdcmSQItem</TT>,<br>
+             - a <TT>gdcmSQItem</TT> is_a <TT>gdcmElementSet</TT>, composed 
+             of <TT>gdcmDocEntries</TT>, recursively <br>
+      </UL>
+   </UL>
+   <LI> Improvement of the jpeg sub-library: jpeg
+           compressed Dicom files (lossless and lossy) 
+           might be read (check-it out)
+</UL>
+
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<H2>
+   <A CLASS="anchor" NAME="NewsVersion0_4">
+      <B>Version 0.4 (February 6 2004)</B></A>
+</H2>
+<UL>
+
+   <LI> <a href="Doc0.4/uml-gdcmV0.4.pdf">gdcm 0.4 UML Class Diagram</a>.
+   <LI> <a href= "Doc0.4/html.user/index.html">User Documentation"</a>
+   <LI> <a href= "Doc0.4/html.developper/index.html">Developper Documentation </a>
+
+   <LI> Introduction of a jpeg sub-library: some very simple jpeg-lossy
+        compressed Dicom files might be working (check-it out).
+   <LI> And also, fewer memory leaks, cleaned-up stl usage (should work
+        with gcc-3.x), python disutil installer (see file setup.py)
+        supporting both Swig and vtk wrapping.
+   <LI> Introduction of a RLE (Run-Time Encoding) library
+   <LI> Color images (RGB or Palette Color) are dealt with
+   <LI> Confusing names <TT>gdcmPatient</TT>, <TT>gdcmStudy</TT>,
+        <TT>gdcmSerie</TT>, <TT>gdcmPatient</TT> changed to 
+        <TT>gdcmDicomDirPatient</TT>, <TT>gdcmDicomDirStudy</TT>, 
+        <TT>gdcmDicomDirSerie</TT>, <TT>gdcmDicomDirPatient</TT>
+ 
+</UL>
+
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<H2>
+   <A CLASS="anchor" NAME="NewsVersion0_3">
+      <B>Version 0.3 (July 8 2003)</B></A>
+</H2>
+<UL>
+   <LI> <TT>gdcmFile</TT> class now enables acces to the data
+       i.e. the image[s] content. Previously only parsing of the
+       Dicom header was available through usage of <TT>gdcmHeader</TT>
+       class.
+   <LI> a <A HREF="http://public.kitware.com/VTK/">VTK</A> plugin
+       of gdcm is now available through the <TT>vtkGdcmReader</TT>
+       vtk class (see it as a vtk wrapper of gdcm), which enables
+       <UL>
+         <LI> Loading of a single image,
+         <LI> Loading of a stack of images from multiple Dicom files,
+         <LI> this class is wrapped for vtkPython (by using native vtk
+              wrappers).
+       </UL>
+   <LI> Introduction of a jpeg sub-library: lossless-jpeg
+        compressed Dicom files work.
+<LI> <TT>vtkgdcmViewer</TT> allows easy displaying of single/multiframe 
+     GreyLevel/RGB/PaletteColor images
+</UL>
+
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<H2>
+   <A CLASS="anchor" NAME="NewsVersion0_1">
+      <B>Version 0.1 (April 1 2003)</B></A>
+
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<H2>
+   <A CLASS="anchor" name="NewsVersion0_1">
+      <B>Version 0.0 (March 14 2003)</B></A>
+
+<HR size="1"><ADDRESS style="align: right;"></ADRESS>
+
+</BODY>
+</HTML>

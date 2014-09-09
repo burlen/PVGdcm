@@ -1,0 +1,303 @@
+-----------------------------------------------------------------------------
+Proposed Template of an entry in this TODO:
+(Note: Date is the date of registering of first demand.)
+
+-------------
+Description:
+Date:
+Attributed:
+Details:
+Comments:
+-------------
+
+-----------------------------------------------------------------------------
+Description: GDCM does not read Spacing properly.
+Date: 2006 June 5
+Attributed:
+Details:
+GDCM is ready completely random values to find out the spacing/origin or an
+image. It *SHOULD* first find the IOD and then deduce which tags to read
+Eg: Cross section this is in Pixel Spacing (0028,0030)
+CR is in Imager Pixel Spacing (0018,1164)
+US is in Pixel Ratio (0028,0034)
+RT is in :
+(3002,0011) Image Plane Pixel Spacing
+(3002,0012) RT Imaga ePosition
+and
+(3004,000c) for deducing Z spacing
+-----------------------------------------------------------------------------
+Description: GDCM is pretty dumb with binary data
+Date: 2006 May 1
+Attributed:
+Details:
+D 0028|0009 [AT] [Frame Increment Pointer] [gdcm::Binary data loaded;length = 4]
+-----------------------------------------------------------------------------
+Description: gdcm does not handle deflate TS
+Date: 2006 Jan 25
+Attributed: Mathieu
+Details:
+image_dfl from dclunie website is not working since the *whole* dataset
+is compressed. Therefore we cannot even parse the file.
+-----------------------------------------------------------------------------
+Description: Problem with PrintFile and OB field
+Date: 2005 Dec 30
+Attributed: Mathieu
+Details:
+  Doing a PrintFile on RickAvila DataSet we get:
+D 0043|1028 lg :        x(2)        2 Off.:      x(bb2)     2994 [OB]                                                  [Unique image iden] [00]
+Whereas hexedit shows 3030 ??
+-----------------------------------------------------------------------------
+Description: Make sure that that gdcm lib can be dlopen'ed/dlclose
+Date: 2005 Sep 14
+Attributed: Mathieu
+Details:
+  As reported in ITK mailing list, the global symbols are completely
+  skrewed up in gdcm, preventing one to dlopen/dlclose gdcm lib. 
+  -> Need to add a nighlty test
+  -> Need to write the code :(
+-----------------------------------------------------------------------------
+Description: Add testing of valid dictionary
+Date: 2005 Aug 31
+Attributed: Mathieu
+Details:
+Since that now private/shadow dictionary are available
+it would be nice to start implementing an automatic mode of loading
+those dictionary as we read the public one.
+Comments: It shouldn't be too difficult to 'manualy' ask memory merging 
+          of a Private Dict into the public one (I can do it soon).
+			 Automatic recognition of the Private Dict to be used seems hopeless.
+-----------------------------------------------------------------------------
+Description: gdcm::SerieHelper / UID / set of rules
+Date: 2005 Aug 30
+Attributed: Mathieu
+Details:
+  gdcm::SerieHelper now offer a mechanism to add rules to sub select image 
+as we iterate over them within a subdirectory structure. But what if UID was too
+restrictive ? Therefore UID subselection become only a good default rule, which
+should ideally be removed when user need a specific task.
+Comments:
+-----------------------------------------------------------------------------
+Description: Add testing of valid dictionary
+Date: 2005 Aug 29
+Attributed: Mathieu
+Details:
+It is potentially possible that user modifies the dictionary that gdcm provides
+and this is also possible that the dictionary generated from pdf is buggy
+(see 2001,xx5F. VR = SQ, VM = 1-n, from 
+www.medical.philips.com/main/company/connectivity/assets/docs/dicomcs/mr91.pdf)
+Therefore gdcm should check for any typo, and report it (if possible)
+Comments:
+-----------------------------------------------------------------------------
+Description: Add kwsys as a subdir somewhere in gdcm
+Date: 2004 Oct 8
+Attributed: Mathieu
+Details:
+  kwsys is a lightweight library developped by kitware, used in project like
+ITK, VTK, CMake and ParaView. It runs and compile on almost any plateform with c++
+compiler. And it provide a cross plateform approach to any kind of system call
+(executing a process, killing a process, realpath, filename/directory management ...)
+Comments:
+   * jpr : what does 'kwsys' stand for?
+-----------------------------------------------------------------------------
+Description: Extent reading support
+Date: 2004 Oct 8
+Attributed: Mathieu
+Details:
+Comments: All ITK/VTK readers support selecting extent. gdcm should support 
+selecting extent before being inserted into ITK
+-----------------------------------------------------------------------------
+Description: gdcmDicomDir and SQItem creation
+Date: 2004 Nov 16
+Attributed:
+Details: DicomDir creates some SQItem (by new). Then, it creates
+  the corresponding DicomDirPatient, etc. using the content of the SQItem
+  (the content is composed with some DocEntry's that can't be destroyed).
+  So, if the SQItem is deleted, then it's content is deleted to. But the 
+  DicomDirPatient, etc. use the content of the SQItem. Then, the SQItem can't
+  be deleted, and when have memory leaks
+Comments : 
+   * JPR : Fixed
+-----------------------------------------------------------------------------
+Description: [BUG] Better handling of unfound Dicom dictionary.
+             When gdcm doesn't find the Dicom dictionary (because it's
+             path to the directory of dictionary is uncorrect, either
+             because the install relative layout was broken after file moves
+             or because the environnement variable GDCM_DICT_PATH is 
+             unpropely set), gdcm will:
+             1/ print a warning
+             2/ throw an exception (that is internaly UNcatched by gdcm)
+                that in most cases provoques the caller application to
+                exit uncleanly (uncatched excpetions in fine call abort() ).
+             Additionaly on Win32 the warning print isn't displayed because
+             exiting occurs prior to cerr or cout is flushed properly.
+Date: 2004 Oct 15
+Attributed:
+Details: fixes (from dirty to clean)
+         1/ force Win32 to flush it's buffer so at least the user gets some
+            reason why it's application exited (when called in command
+            environement). Note: it looks like the "cerr << flush" fails. Sigh.
+         2/ within gdcm catch the exception, display a decent warning, and
+            return to caller.
+         3/ see the comment below on how to enhance the API and fix things
+            really cleanly.
+Comments: ENH proposal:
+          The caller migth not be aware of the path to the dictionaries
+          on invocation of gdcm (think this path is set by the Interface
+          because the caller wants to skip the default gdcm dictionary in order
+          to provide his own ones e.g. another language based one).
+             Hence, gdcm should postpone the parsing of the default dictionary
+          instead of doing it on library entry.
+          This would enable two things:
+           - It would give a chance to the caller to set the path to
+             the dictionaries he whishes to use, through a call to
+             newly created DictSet::SetDictionaryPath( string ).
+           - It would avoid the burden of using the GDCM_DICT_PATH
+             environnement variable and enable GDCM CONTROL FROM WITHIN
+             THE API. Optionaly, if the caller didn't use the API to
+             provide his prefered path, gdcm could still default to 
+             GDCM_DICT_PATH...
+-----------------------------------------------------------------------------
+Description: vtk/vtkGdcmReader doesn't positionate the normal to the image
+Date: 2004 Oct 1
+Attributed:
+Details: vtkGdcmReader::CheckFileCoherence() sets the DataOrigin[i]
+         but doesn't set the plane (image seen in 3D) normal (is it
+         possible any how). This plane normal could be extracted from 
+         the "orientation" info of the gdcmHeader ( refer to
+         grep "Orientation" Dicts/dicomV3.dic).
+         Problem exhibiting this defect: cine loop on a stack of images
+               whose Origin is correct, but whose normal is not set will
+               plainly suck !
+Comments:
+        * vtkGdcmReader inherits from vtkImageReader which aggregates
+          a vtkTranform. vtkGdcmReader could store (when the user requires
+          it, see below) the origin/normal taken from the Dicom Header
+          within this vtkTransform (looks like a natural place to store
+          this spacial information).
+        * Both settings of the origin and/OR the normal of the plane (image)
+          should be an option defined with a flag (On/Off) in the
+          vtkGdcmReader...
+-----------------------------------------------------------------------------
+Description: test the private dictionary part.
+Date: 2004 Sep 24
+Attributed:
+Details:
+Comments:
+ * Frog: where can we obtain such a private/dictionary and the corresponding
+         Dicom file ? Any examples on-line ?
+ * jpr : some are in gdcm/Dicts (built from pdf documents found on constructors'
+        www sites.
+        When we check them against existing images, we see the are uncomplete
+        and unaccurate ...
+-----------------------------------------------------------------------------
+Description: generate methods based on VM.
+Date: 2004 Jul 30
+Attributed:
+Details:
+ * cmake should parse le DICOM dictionary to generate methods like
+   gdcm???::SetImagePosition(int, int)
+   {
+     //generated content do not edit
+     ...
+   }
+   gdcm???::SetImageNumber(int)
+   {
+     //generated content do not edit
+     ...
+   }
+Comments:
+ * Regrain: a dicom dictionary entry name is NOT UNIQUE [this means
+     two tags=(group, element) can share the same name].
+     What should the wrapper do in such a case !?
+ * Frog: what does VM stand for ?
+ * VM = Value Multiplicity
+-----------------------------------------------------------------------------
+Description: Add information on supported imagers (constructor/model)
+Date: 2004 9 7
+Attributed:
+Details: in order to promote gdcm make a list (on the web pages)
+         of images successfully parsed based on a constructor/model ordering
+Comments:
+ * frog: gdcmData only lists pathological images. How to collect
+         the ones gdcm works smoothly with (hopefully gdcmData is a small
+         subset of what we would like).
+  * jpr : gdcmData contains images that caus*ed* us some troubles.  
+          the aim of gdcm is to read *all* the images, from *all* the
+          constructors and *all* the models.
+          Better we do a 'gdcm Dicom Hall of Shame' with bugged header images,
+          explaining *why* the header is bugged.         
+-----------------------------------------------------------------------------
+Description: Add a GetVersion() global function.
+Date: 2003 july 7
+Attributed:
+Details: This is to be used for version assertion with gdcmPython
+Comments: Done (August 2005)
+-----------------------------------------------------------------------------
+* vtk/vtkGdcmHeader.cxx: if speed becomes a concern some changes can
+  be made at the cost of memory consumption (refer to header of 
+  vtk/vtkGdcmHeader.cxx)
+-----------------------------------------------------------------------------
+* gdcmElValSet::SetElValueLengthByNumber IMNSHO should be trashed.
+  It's only purpose is a onliner substitute to calling GetElValueByNumber
+  and then SetLength. This only obfuscates the caller code more than
+  clarifying it.
+  Besides the definition of gdcmElValSet::SetElValueLengthByNumber itself
+  it quite poor since it is a almost exact copy of
+  gdcmElValSet::GetElValueByNumber except for the returned code.
+  gdcmHeader::SetPubElValLengthByNumber (which is based on 
+  gdcmElValSet::SetElValueLengthByNumber) is used nowhere...
+Comments:
+   * jpr : all the methods SetxxxByName were trashed.
+           all the methods SetxxxByNumber were renamed
+           A general method clean out was performed
+-----------------------------------------------------------------------------
+* All (or at least many of) the methods of gdcmHeader whose only arguments
+  are an ElValue* (e.g.  FindLength, FindVR, LoadElementValue...) can
+  be moved away to ElValue class on condition of transmitting the
+  gdcmHeader.fp attribute. This change should be considered since it
+  would allow those method to avoid artificial calls to ElValue::GetElement(),
+  ElValue::GetVR()...
+-----------------------------------------------------------------------------
+* Group length is not a unique tag in a file. Hence avoid putting it
+  in the element values dictionary without doing something smarter
+  (say, instead of storing the length store the group and the length
+   so we can related a length to a group).
+-----------------------------------------------------------------------------
+* GetPubElValByNumber doit faire la difference entre chaine vide 
+  et chaine pas trouve'e. Eventuellement raiser une exception ?
+-----------------------------------------------------------------------------
+* gdcmHeader::LoadElements only loads the element whose length is
+  below the specified size. When accessing the value of such an element
+  the content is unfound ! Find a decent way of loading the value on
+  explicit demand.
+-----------------------------------------------------------------------------
+* JPR: supply a method that only reads/loads (?) the Dicom elements 
+  given as a list(?).
+-----------------------------------------------------------------------------
+* JPR: gdcmHeader::CheckSwap() dans le cas ACR pas propre, degager tout de
+  suite si on a deduit que c'en est pas...
+-----------------------------------------------------------------------------
+* python /usr/lib/python2.2/site-packages/DaVaW/demo/dvwDcmReader.py
+  and load image /home/frog/cvs/DCMlib/Data/CT-MONO2-16-ankle.dcm
+  will yield wrong coloring scheme as opposed to 
+  affim filein=/home/frog/cvs/DCMlib/Data/CT-MONO2-16-ankle.dcm
+-----------------------------------------------------------------------------
+* gdcmFile should implement the following API:
+   gdcmFile WriteDicom;
+   WriteDicom.SetFileName("MyDicomFile.dcm");
+   string * AllTags = gdcmHeader.GetDcmTagNames();
+   WriteDicom.SetDcmTag(AllTags[5], "253");
+   WriteDicom.SetDcmTag("Patient Name", "bozo");
+   WriteDicom.SetDcmTag("Patient Name", "bozo");
+   WriteDicom.SetImageData(Image);
+   WriteDicom.Write();
+
+   Anonymize(ostream& output) {
+      a = gdcmFile("toto1");
+      a.SetPubValueByName("Patient Name", "");
+      a.SetPubValueByName("Date", "");
+      a.SetPubValueByName("Study Date", "");
+      a.write(output);
+   }
+-----------------------------------------------------------------------------
+

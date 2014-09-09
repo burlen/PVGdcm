@@ -1,0 +1,45 @@
+# gdcmPython Demo configurer
+
+if __name__!="main":
+   import sys
+   import os
+   import inspect
+   import os.path
+
+   def FindPath():
+      try:
+         path=inspect.getsourcefile(FindPath)
+      except:
+         pass
+      else:
+         if( path ):
+            path=os.path.split(path)[0]
+            file=os.path.join(path,"..","__init__.py")
+            if( os.path.isfile(file) ):
+               gdcmPath=os.path.join(path,"..","..")
+               sys.path.append(gdcmPath)
+               sys.path.append(os.path.join(gdcmPath,"bin"))
+               if( os.name != 'posix' ):
+                  sys.path.append(os.path.join(gdcmPath,"bin","Release"))
+                  sys.path.append(os.path.join(gdcmPath,"bin","Debug"))
+
+   def UseCMakePath():
+      sys.path.append('${GDCM_BINARY_DIR}')
+      sys.path.append('${GDCM_BINARY_DIR}/bin')
+      if( os.name != 'posix' ):
+         sys.path.append('${GDCM_BINARY_DIR}/bin/Release')
+         sys.path.append('${GDCM_BINARY_DIR}/bin/Debug')
+
+   try:
+      mod=__import__("gdcmPython")
+   except:
+      FindPath()
+      try:
+         mod=__import__("gdcmPython")
+      except:
+         UseCMakePath()
+
+else:
+   print "Only a system configurer for gdcm Demos."
+   print "Can't be executed"
+

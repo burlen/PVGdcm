@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+   <META http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+   <TITLE>GdcmData access with cvs</TITLE>
+</HEAD>
+                                                                                
+<BODY>
+                                                                                
+<!#######################################################################>
+<H1>Using CVS for retrieval of gdcmData</H1>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+<!#######################################################################>
+To learn more about CVS and to get the CVS programs, please refer to the
+<A HREF="http://www.cvshome.org/index.html">CVS Home</A>. 
+
+<UL>
+  <LI><B>GENERAL</B>
+    <UL>
+      <LI>Repository server:
+      <tt>:pserver:anonymous@cvs.creatis.insa-lyon.fr:2402/cvs/public</tt>
+      <LI>Password is <TT>anonymous</TT>
+    </UL>
+  <LI><B>Linux</B>
+    <IMG src="Icons/os-linux.gif" alt="tux logo" nosave height=32 width=32>
+    (if your shell is not bash then please adapt the syntax)
+    <UL>
+      <LI><tt>export CVSROOT=:pserver:anonymous@cvs.creatis.insa-lyon.fr:2402/cvs/public</tt>
+      <LI><tt>cvs login</tt> (at prompt <TT>CVS password</TT> answer <TT>anonymous</TT>)
+      <LI><tt>cvs checkout gdcmData</tt>
+    </UL>
+  <LI><B>Windows (WinCVS 1.2)</B>
+    <IMG src="Icons/os-windows.gif" alt="win95 logo" nosave height=32 width=32>
+    <UL>
+      <LI>Tag general - CVSROOT :
+        <tt>:pserver:anonymous@cvs.creatis.insa-lyon.fr:/cvs/public</tt>
+      <LI>Tag Ports - check 'For pserver' : <tt>2402</tt>
+    </UL>
+</UL>
+
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+</body>
+</html>
+

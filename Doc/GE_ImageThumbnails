@@ -1,0 +1,127 @@
+
+ 
+7. APPENDIX A: IMAGE THUMBNAILS ADDED TO DICOM IMAGES
+ 
+7.1 IMAGE THUMBNAIL
+ 
+PathSpeedâ"¢ PACS will create a thumbnail for each DICOM Image SOP Instance of
+the following Photometric Interpretation values:
+* MONOCHROME1 
+* MONOCRHOEM2 
+* RGB
+ 
+The thumbnail is derived from the original pixel data by downscaling the image 
+size to 128 Ã- 128 pixels or less, and added to the original SOP Instance 
+with a private sequence data element in the DICOM Image SOP Instance.
+ 
+One thumbnail is created per DICOM image. For a multi-frame image, 
+only one thumbnail is created from the center frame. 
+The number of the frame, which is used for the thumbnail creation is included in
+the Image SOP Instance (see Section 7.3).
+In PathSpeedâ"¢ PACS, the thumbnails are used by the PathSpeedâ"¢ Web 
+display application for image navigation when browsing through a set of images.
+ With the information  published in this Appendix, a DICOM application receiving
+ the images from PathSpeedâ"¢ PACS can also explore the thumbnail data
+encoded in the Image SOP Instances.
+ 
+7.2 IMAGE THUMBNAIL COMPRESSION
+ 
+The thumbnail is compressed with 8 bits or 12 bits JPEG lossy compression 
+format, depending on the stored pixel depth of the original images.
+For all Image SOP Instances with bits stored equal to or less then 8, 
+the thumbnail image is stored one
+byte per pixel and compressed by JPEG 8-bits lossy compression.
+For all Image SOP Instances with bits stored equal to or less 12, 
+the thumbnail image is stored two bytes per pixel and compressed 
+by JPEG 12-bits lossy compression.
+For all Image SOP Instances with bits stored greater than 12, the pixel data of
+ the thumbnail image id first shifted to fit into the 12 bits scope and then 
+ stored two bytes per pixel
+The thumbnail is compressed by JPEG 12-bits lossy compression. 
+The bits shifted is saved in the GE Private Image Thumbnail Sequence, 
+as specified in the next section.
+All thumbnails are represented in the unsigned format (either byte or two-bytes
+ (12 bits) integer). 
+ If an Image SOP Instance contains a signed pixel data element, the thumbnail 
+ pixel  data will be offset to the unsigned scope. 
+The offset added is saved in the GE Private Image Thumbnail  Sequence, 
+as specified in the next section.
+ 
+Page 55
+ 
+7.3 IMAGE THUMBNAIL ENCODING
+ 
+PathSpeedâ"¢ PACS adds a private sequence data element (GE Private Image 
+Thumbnail Sequence) to an Image SOP Instance for the thumbnail encoding. 
+There is no any change  to the existing data attributes of the SOP Instance.
+The GE Private Image Thumbnail Sequence is specified in the following table.
+Data Element
+ 
+Tag VR VM Description
+ 
+Private Creator ID (0009,00xx) LO 1 GEIIS, Reserve xx00-xxFF of group 0009 
+in the SOP Instance.
+GE Private Image Thumbnail Sequence (0009,xx10) SQ 1 Always only one item 
+present
+ 
+> Sample per Pixel (0028,0002) US 1 Copy from the original SOP Instance 
+> Photometric Interpretation (0028,0004) CS 1 Thumbnail Photometric 
+                                                               Interpretation.
+                                              Enumerated Values:
+                                                MONOCHROME1,
+                                                MONOCHROME2, RGB
+> Planar Configuration (0028,0006) US 1 Thumbnail Planar Configuration.  
+Always 0, if present.  
+> Number of Frames (0028,0008) IS 1 Copy from the original SOP Instance.  
+The thumbnail itself is always single frame.  
+> Rows (0028,0010) US 1 Thumbnail Rows of Image Matrix, â‰¤ 128.  
+> Columns (0028,0011) US 1 Thumbnail Columns of Image Matrix, â‰¤ 128.  
+> Bits Allocated (0028,0100) US 1 Copy from the original SOP Instance
+> Bits Stored (0028,0101) US 1 Copy from the original SOP Instance.  
+If this value is 8 or less, the thumbnail JPEG stream is 8 bits compressed, 
+otherwise, it is 12 bits compressed.  
+> High Bit (0028,0102) US 1 Copy from the original SOP Instance 
+> Pixel Representation (0028,0103) US 1 Copy from the original SOP Instance 
+> Largest Image Pixel Value (0028,0107) US/ SS 1 Copy from the original 
+SOP Instance 
+> Pixel Padding Value (0028,0120) US/ SS 1 Copy from the original 
+SOP Instance 
+> Window Center (0028,1050) DS 1-n Copy from the original SOP Instance 
+
+Page 56
+ 
+> Window Level (0028,1051) DS 1-n Copy from the original SOP Instance 
+> Rescale Intercept (0028,1052) DS 1 Copy from the original SOP Instance 
+> Rescale Slope (0028,1053) DS 1 Copy from the original SOP Instance 
+> Private Creator ID (0029,0010) LO 1 â€"GEIISâ€œ, Reserve 1000-10FF 
+of group 0029 in this item.  
+> Shift Count (0029,1010) UL 1 Number of bits pixel values were shifted down 
+to get them into the 12 bits range before JPEG compression.  
+> Offset (0029,1012) UL 1 Value added to pixel values to convert them from 
+signed to unsigned values before JPEG compression.  
+> Actual Frame Number (0029,1014) UL 1 Actual frame number of image the 
+thumbnail was generated from. For multi-frame images, this should represent 
+the center frame. Only one thumbnail is created for the entire 
+multi-frame image.  
+> Private Creator ID (7FD1,0010) LO 1 â€"GEIISâ€œ, Reserve 1000-10FF of 
+group 7FD1 in this item.  
+> GE IIS Compression Type (7FD1,1010) UL 1 PathSpeedâ"¢ PACS internally used 
+data compression code. Always 26 for thumbnail 
+> Pixel Data (7FE0,0010) OB 1 8 bits or 12 bits JPEG lossy compressed thumbnail 
+image pixel data stream.  
+
+TABLE 
+7-1: SPECIFICATION OF GE PRIVATE IMAGE THUMBNAIL SEQUENCE
+ 
+The GE Private Image Thumbnail Sequence includes a number of standard data 
+elements directly copied from the original Image SOP Instance, 
+to which the sequence is added. 
+These data elements are marked as Copy from the original SOP Instance in 
+Table 7-1. 
+These data elements provide the original pixel data context from that 
+the thumbnail has been derived. Note that they do not contain the values 
+specific to the thumbnail.
+The GE Private Image Thumbnail Sequence uses a number of standard data elements
+ to describe the properties of the thumbnail pixel data. 
+ Note that these data elements  in this sequence really contain the values 
+ specific to the thumbnail, but not to the original image pixel data

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+   <META http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+   <TITLE>GdcmPython</TITLE>
+</HEAD>
+
+<BODY>
+
+<!#######################################################################>
+<H1>Python wrappers for gdcm</H1>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+<!#######################################################################>
+<H2>Working with Python</H2>
+<UL>
+<LI><code>cd GDCM_HOME</code>
+</LI>
+<LI><code>export PYTHONPATH=`pwd`</code>
+</LI>
+<LI><code>cd gdcmPython</code>
+</LI>
+<LI><code>ln -s .libs/pygdcm.so _gdcm.so</code>
+   <BR> (this is because automake doesn't allow the building of libraries
+   whose name starts with an underscore. Since we need the
+   wrapper library to be named _gdcm [because swig automaticatily uses
+   this name when building the shadow classes], automake generates
+   pygdcm.so and at install stage stage renames it to _gdcm.so).
+</LI>
+<LI>You can then use gdcmPython for manual test/demos
+   <OL>
+   <LI><code>cd GDCM_HOME/gdcmPython/demo</code>
+   </LI>
+   <LI><code>python PrintHeader.py</code>
+   </LI>
+   </OL>
+</LI>
+</UL>
+
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<PRE>
+  Depending on the cmake flags you used in order to compile gdcm could
+  be wrapped in two ways:
+  - the first python wrappers of gdcm uses Swig (http://www.swig.org). These
+    are the one generated when using autogen.sh --enable-python.
+    The entry point here is the file gdcmPython/gdcm.i which uses the
+    Swig syntax. As the last lines of this file (the ones starting
+    with the %include directive) only some classes are wrapped for python.
+    In theory only the library interface (basically the classes gdcmHeader
+    and gdcmFile) should be wrapped, but the time being some additional
+    classes are added (just to make sure those classes are Swig compatible:
+    swig is here used as some link checker!?).
+    Since gdcm is written in C++, Swig will produce two different outputs:
+      -- some C based low level wrapper (see gdcmPython/gdcm_wrap.c)
+      -- some Python based object oriented so called "shadow classes" (see
+         file gdcmPython/gdcm.py)
+    We also added the file gdcmPython/__init__.py which is the one that
+    actually gets loaded when one uses the gdcmPython Python package.
+    The file __init__.py loads the Swig generated shadow classes (gdcm.py)
+    but will only re-export the interface of gdcm which corresponds to
+    the lines :
+       gdcmHeader = gdcm.gdcmHeader
+       gdcmDictSet = gdcm.gdcmDictSet
+       gdcmFile = gdcm.gdcmFile
+       [etc.]
+    Hence this whole Swig wrapping process is quite odd since we shall
+    wrap more classes (%include in swig.i) that eventually get exported to
+    the final user by gdcmPython/__init__.py.
+  - the second python wrappers uses the vtk (http://public.kitware.com/VTK/)
+    native wrappers i.e. the binary vtkWrapPython. But it should be noticed
+    that the purpose is here a bit different than the one of the Swig
+    generated Python wrappers. When using vtkWrapPython the goal is to
+    wrap a single vtk class namely vtkGdcmReader as defined in files
+    vtk/vtkGdcmReader.h and vtk/vtkGdcmReader.cxx (and of course those
+    files are hand made vtk oriented wrappers of gdcm).
+    Those wrappers are the one generated when using
+       autogen.sh --enable-python --enable-vtk
+  - In order to understand the difference between both wrappers you should
+    compare both demo scripts gdcmPython/demo/vtkGdcmDemo.py and
+    gdcmPython/demo/vtkGdcmReader.py. The first one only uses the
+    Swig wrapped classes ("from gdcmPython import gdcmHeader') as opposed
+    to vtkGdcmReader.py which also uses vtkWrapPython wrapped classes
+    ("from gdcmPython.vtkgdcmPython import *").
+</PRE>
+
+<!#######################################################################>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+</BODY>
+</HTML>

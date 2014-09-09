@@ -1,0 +1,11 @@
+#include <iostream>
+
+void MyWrappedFunction(void) {
+   try { throw "In thrower"; }
+   catch (const char * str) { cout<<"Exception"<< str << endl; }
+}
+
+int main() {
+	MyWrappedFunction();
+	return 0;
+}

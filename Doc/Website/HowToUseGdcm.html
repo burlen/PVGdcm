@@ -1,0 +1,1090 @@
+<pre>
+{{{
+This is a vi-able/notepad-able document to (try to) explain in a few words 
+how to use efficently gdcm.
+-->Feel free to send/add your comments/suggestions/modifications.
+-->Don't try to 'beautify' this page.
+(I plane to rewrite it in html, as soon as there is enough 'content' within it)
+
+HTH
+Jean-Pierre Roux
+
+------------------------------------------------------------------------
+
+0) Intro
+========
+1) How to Read a DICOM file
+===========================
+1-1) using raw C++
+1-1-1) A single file
+1-1-1-1) Deal with the file header
+1-1-1-2) Load the 'pixels' in memory
+1-1-1-3) Get the value of a single Dicom DataElement 
+1-1-1-4) Get the values within a Dicom Sequence  
+1-1-2) A File Set
+
+1-2) using VTK
+1-2-1) A single file
+1-2-2) A File Set
+
+1-3) using ITK
+1-3-1) A single file
+1-3-2) A File Set
+
+1-4) Retrictions for Python users
+
+2) How to write DICOM file
+==========================
+2-1) using raw C++
+2-1-1) A single file
+2-1-1-1) Deal with optional DataElements
+2-1-1-1-1) Add a single Dicom DataElement // TODO
+2-1-1-1-2) Add a Dicom Sequence           // TODO
+2-1-2) A File Set
+
+2-2) using VTK
+
+2-3) using ITK
+
+2-4) Retrictions for Python users
+
+3) DICOMDIR
+===========
+3-1) How to read a DICIMDIR
+3-2) How to modifiy a DICOMDIR
+3-3) How to create a DICOMDIR
+
+4) Some 'Command line' utilities
+================================
+4-) PrintFile
+4-) exSerieHelper
+4-) exXCoherentFileSet
+
+4-) AnonymizeNoLoad
+4-) AnonymizeMultiPatient
+4-) AnonymizeDicomDir
+
+4-) ReWrite
+4-) RawToDicom
+4-) exMoveImagesToSingleSerieUID
+
+4-) vtkgdcmViewer2
+4-) vtkgdcmSerieViewer2
+
+4-) PrintDicomDir
+4-) MakeDicomDir
+
+----------------------------------------------------------------------------
+
+0) Intro
+========
+
+If you are not familiar with DICOM files, use :
+
+PrintFile filein=yourDicomFile.dcm
+
+and have a look at the output.
+You'll see a lot of self explanatory (?) lines, e.g.
+
+D 0008|0021 [DA]   [Series Date]     [20020524]
+D 0008|0060 [CS]   [Modality]        [US]
+D 0018|602c [FD]   [Physical Delta X][0]
+D 0020|0013 [IS]   [Instance Number] [5 ]
+D 0028|0010 [US]   [Rows]            [480]
+D 0011|0010 [  ]   [gdcm::Unknown]   [DLX_PATNT_01]
+D 0028|1222 [OW]   [Segmented Green Palette Color Lookup Table Data]
+                                 ===> [gdcm::Binary data loaded;length = 113784]
+
+0008|0021 : 'Group Number'|'Element Number' -> The Element identifier
+Have a look at gdcm/Dicts/dicomV3.dic for the whole list of Elements
+ 
+DA        : The 'Value Representation' : DA for Date, US for Unsigned Short, ...
+Have a look at gdcm/Dicts/dicomVR.dic for the set of possible values
+
+[Series Date] : The 'official' English name of the Element
+(When *you* have to deal with a given Element, its meaning should be clear for
+*you*)
+
+[20020524] : the value, printed in a human readable way.
+
+If something like :
+D 0028|1222 [OW] [Segmented Green Palette Color Lookup Table Data]
+                                 ===> [gdcm::Binary data loaded;length = 113784]
+is displayed, it means that it's a 'long' binary area, gdcm (I) decided not to
+show.
+
+D 0011|0010 [  ]   [gdcm::Unknown]   [DLX_PATNT_01]
+is a 'Private (or Shadow) Element', depending on the manufacturer.
+It's *not* known within the 'official' Dicom Dictionnary.
+Except if someone told you, you cannot guess the meaning of such an element.
+Probabely, you'll never have to deal with Shadow Elements (hope so!).
+
+You can find also something like : 
+
+S 0018|6011 [SQ]                       [Sequence of Ultrasound Regions]
+   |  --- SQItem number 0
+   | D fffe|e000 [UL]                               [Item]
+   | D 0018|6018 [UL]             [Region Location Min X0] [32]
+   | D 0018|601a [UL]             [Region Location Min Y0] [24]
+   | D 0018|601c [UL]             [Region Location Max X1] [335]
+   | D 0018|601e [UL]             [Region Location Max Y1] [415]
+   | D 0018|602c [FD]                   [Physical Delta X] [0.0382653]
+   | D 0018|602e [FD]                   [Physical Delta Y] [0.0382653]
+   |  --- SQItem number 1
+   | D fffe|e000 [UL]                               [Item]
+   | D 0018|6018 [UL]             [Region Location Min X0] [336]
+   | D 0018|601a [UL]             [Region Location Min Y0] [24]
+   | D 0018|601c [UL]             [Region Location Max X1] [639]
+   | D 0018|601e [UL]             [Region Location Max Y1] [415]
+   | D 0018|602c [FD]                   [Physical Delta X] [0.0382653]
+   | D 0018|602e [FD]                   [Physical Delta Y] [0.0382653]
+   |  --- SQItem number 2
+   | D fffe|e000 [UL]                               [Item]
+   | D 0018|6018 [UL]             [Region Location Min X0] [32]
+   | D 0018|601a [UL]             [Region Location Min Y0] [40]
+   | D 0018|601c [UL]             [Region Location Max X1] [63]
+   | D 0018|601e [UL]             [Region Location Max Y1] [103]
+   | D 0018|6024 [US]         [Physical Units X Direction] [0]
+   | D 0018|6026 [US]         [Physical Units Y Direction] [0]
+   | D 0018|602c [FD]                   [Physical Delta X] [0]
+   | D 0018|602e [FD]                   [Physical Delta Y] [0]
+
+0018|6011 is a 'Sequence' (SQ), composed of various Sequence Items(SQItem)
+Each SQItem is a set of Elements (an Element may be a DataElement (D) or a
+Sequence (S), recursively, within any level of embedding :
+
+S 0029|263d [SQ]                                                                   []
+   |  --- SQItem number 0
+   | D fffe|e000 [UL]                                                              [Item ]
+   | D 0008|0000 [UL]                                                       [Group Length] [12]
+   | D 0008|0001 [UL]                                               [Length to End (RET) ] [28776]
+   | D 0029|0000 [UL]                                                       [Group Length] [28764]
+   | D 0029|002a [LO]                                                    [Private Creator] [SPI-P-Private_ICS Release 1;6 ]
+   | D 0029|2a02 [LO]                                                                   [] [PERFUSION_MR_T2STAR_GAMMA_VARIATE_ANALYSER]
+   | S 0029|2a06 [SQ]                                                                   []
+   |    |  --- SQItem number 0
+   |    | D fffe|e000 [UL]                                                              [Item ]
+   |    | D 0008|0000 [UL]                                                       [Group Length] [12]
+   |    | D 0008|0001 [UL]                                               [Length to End (RET) ] [20]
+   |    | D fffe|0000 [UL]                                                       [Group Length]
+   |    |  --- SQItem number 1
+   |    | D fffe|e000 [UL]                                                              [Item ]
+   |    | D 0008|0000 [UL]                                                       [Group Length] [12]
+   |    | D 0008|0001 [UL]                                               [Length to End (RET) ] [194]
+   |    | D 0029|0000 [UL]                                                       [Group Length] [182]
+   |    | D 0029|002a [LO]                                                    [Private Creator] [SPI-P-Private_ICS Release 1;6 ]
+   |    | S 0029|2a07 [SQ]                                                                   []
+   |    |    |  --- SQItem number 0
+   |    |    | D fffe|e000 [UL]                                                              [Item ]
+   |    |    | D 0008|0000 [UL]                                                       [Group Length] [12]
+   |    |    | D 0008|0001 [UL]                                               [Length to End (RET) ] [100]
+   |    |    | D 0029|0000 [UL]                                                       [Group Length] [88]
+   |    |    | D 0029|002a [LO]                                                    [Private Creator] [SPI-P-Private_ICS Release 1;6 ]
+   |    |    | D 0029|2a0a [US]                                                                   [] [1]
+   |    |    | D 0029|2a0b [US]                                                                   [] [2]
+   |    |    | D 0029|2a0c [US]                                                                   [] [2]
+   |    |    | D 0029|2a0d [US]                                                                   [] [1]
+   |    |    | D 0029|2a10 [US]                                                                   [] [1]
+   |    |    | S 0029|2a2e [SQ]                                                                   []
+   |    |    |    |  --- SQItem number 0
+   |    |    |    | D fffe|e000 [UL]                                                              [Item ]
+   |    |    |    | D 0008|0000 [UL]                                                       [Group Length] [12]
+   |    |    |    | D 0008|0001 [UL]                                               [Length to End (RET) ] [2266]
+   |    |    |    | D 0029|0000 [UL]                                                       [Group Length] [2254]
+   |    |    |    | D 0029|0025 [LO]                                                    [Private Creator] [SPI-P-Private_ICS Release 1;1 ]
+   |    |    |    | D 0029|0027 [LO]                                                    [Private Creator] [SPI-P-Private_ICS Release 1;3 ]
+   |    |    |    | D 0029|0028 [LO]                                                    [Private Creator] [SPI-P-Private_ICS Release 1;4 ]
+   |    |    |    | D 0029|2500 [SL]                                                                   [] [43]
+   |    |    |    | D 0029|256b [FD]                                                                   [] [0.5]
+   |    |    |    | D 0029|2700 [LO]                                                                   [] [L1]
+   |    |    |    | D 0029|276a [FL]                                                                   [] [0.35]
+   |    |    |    | S 0029|27c0 [SQ]                                                                   []
+   |    |    |    |    |  --- SQItem number 0
+   |    |    |    |    | D fffe|e000 [UL]                                                              [Item ]
+   |    |    |    |    | D 0008|0000 [UL]                                                       [Group Length] [12]
+   |    |    |    |    | D 0008|0001 [UL]                                               [Length to End (RET) ] [110]
+   |    |    |    |    | D 0029|0000 [UL]                                                       [Group Length] [98]
+   |    |    |    |    | D 0029|0027 [LO]                                                    [Private Creator] [SPI-P-Private_ICS Release 1;3 ]
+   |    |    |    |    | D 0029|27b0 [SL]                                                                   [] [0]
+   |    |    |    |    | D 0029|27b1 [FL]                                                                   [] [0]
+   |    |    |    |    | D 0029|27b2 [FL]                                                                   [] [0]
+   |    |    |    |    | D 0029|27b4 [FL]                                                                   [] [0]
+   |    |    |    |    | D 0029|27b9 [FL]                                                                   [] [1]   
+   | S 0029|2a14 [SQ]                                                                   []
+   |    |  --- SQItem number 0
+   |    | D fffe|e000 [UL]                                                              [Item ]
+   |    | D 0008|0000 [UL]                                                       [Group Length] [12]
+   
+Probabely, you'll never have to deal with Sequences (hope so!).
+
+1) How to Read a DICOM File
+===========================
+
+1-1) using raw C++
+------------------
+
+1-1-1) A single file
+--------------------
+
+1-1-1-1) Deal with the file header
+
+The first step is to load the file header :
+           gdcm::File *f = gdcm::File::New();
+                  f->SetLoadMode(LD_NOSEQ);              | depending on what
+                  f->SetLoadMode(LD_NOSHADOW);           | you want *not* 
+                  f->SetLoadMode(LD_NOSEQ | LD_NOSHADOW);| to load from the
+                  f->SetLoadMode(LD_NOSHADOWSEQ);        | target file
+           f->SetFileName(fileName);
+           f->Load( );
+
+Note :
+The 'long' Data Element (>4096 char) are not loaded by default
+You may modify this default length :
+           f->SetMaxSizeLoadEntry(int yourOwnMaxSize);
+Or ask to force the loading of given Data Elements, whatever their size is:  
+            f->AddForceLoadElement (uint16_t group, uint16_t elem);
+before calling gdcm::File::Load();
+
+Note :
+Except if you are really aware about it, do *not* use SetLoadMode().
+LD_ALL is the default.
+
+Check if the file is gdcm-readable.
+
+           if ( !f->IsReadable() )
+             std::cout << "major troubles on [" << f->GetFileName() <<"]"
+                       << std::endl;
+
+Decide if this is a 'File Of Interest' for you.
+Check some fields, e.g
+
+           std::string StudyDate           = f->GetEntryString(0x0008,0x0020);
+           std::string PatientName         = f->GetEntryString(0x0010,0x0010);
+           std::string PatientID           = f->GetEntryString(0x0010,0x0020);
+           std::string PatientSex          = f->GetEntryString(0x0010,0x0040);
+           std::string Modality            = f->GetEntryString(0x0008,0x0060);
+
+(or whatever you feel like ...)
+
+1-1-1-2) Load the 'pixels' in memory
+
+Next step is to load the pixels in memory.
+Uncompression (JPEG lossless, JPEG lossy, JPEG 2000, RLE, ...) 
+will be automatically performed if necessary.
+
+You first have to create a 'File Helper'
+
+           gdcm::FileHelper *fh = gdcm::FileHelper::New(f);
+
+In some images,(where BitsAllocated=16, BitsUsed=8), 
+the 'unused bits' are actually ... used for storing 'overlays'.
+(e.g. : Patient / Aquisition / Institution informations, or drawings ...)
+It's up to you to decide whether you want or not to load the overlays.
+(Probabely, if you want to post-process the images, you dont' want!)
+
+           fh->SetKeepOverlays(true);  // default is : false
+
+           void *imageData = fh->GetImageDataRaw();
+           uint32_t dataSize = fh->GetImageDataRawSize();
+
+Generally, you work on 'Grey level' images (as opposed to RGB images).
+Depending on the Pixel size (8/16/32 bits) and the Pixel Type (signed/unsigned),
+you cast the imageData
+
+          std::string pixelType = f->GetPixelType();
+  
+Possible values are : 
+
+- "8U"  unsigned  8 bit,
+- "8S"    signed  8 bit,
+- "16U" unsigned 16 bit,
+- "16S"   signed 16 bit,
+- "32U" unsigned 32 bit,
+- "32S"   signed 32 bit,
+- (NEITHER 'float' NOR 'double' pixels in DICOM!)
+   
+           int dimX = f->GetXSize();
+           int dimY = f->GetYSize();
+           int dimZ = f->GetZSize(); // meaningfull only for 'Volumes' or 'multiframe files'
+           int dimT = f->GetTSize(); // meaningfull only for 4D objects (?)
+
+Sometimes, you deal with 'colour' images :-(
+They may be stored, on disc, as :
+     RGB pixels, 
+     RGB planes, 
+     YBR pixels, 
+     YBR planes
+     Grey level images + LUT.
+
+You'll get an 'RGB Pixels' image in memory if you use: 
+
+           gdcm::FileHelper *fh = gdcm::FileHelper::New(f);
+           void *imageData = fh->GetImageData();
+           uint32_t dataSize = fh->GetImageDataSize();
+
+If you don't want to convert a "Grey level images + LUT" into "RGB Pixel image" use
+           gdcm::FileHelper *fh = gdcm::FileHelper::New(f);
+           void *imageData = fh->GetImageDataRaw();
+           uint32_t dataSize = fh->GetImageDataRawSize();
+   
+Now, you can enjoy your image !   
+
+1-1-1-3) Get the value of a single Dicom DataElement 
+
+1-1-1-3-1) as a std::string
+
+- some DataEntries are 'human readable' (those whose VR is AE, DA, DS, PN, SH, TM)
+  Get their value using group number-element number :
+  std::string patientName = f->GetEntryString(0x0010,0x0010);
+  
+- Some DataEntries are stored with their own binary representation, but maybe you feel like 
+  to get them in a 'human readable' form (those whose VR is FL, FD, SL, SS, UL, US)
+  Get their value using group number-element number : 
+  std::string rowNumber =f->GetEntryString(0x0028, 0x0010);// nb of Rows
+  
+  (of course, the very often used DataEntries have their own accessors :
+  e.g. GetXsize, GetYSize, GetSpacing, GetImageOrientationPatient, GetImagePositionPatient,
+       GetRescaleSlope, GetRescaleIntercept, GetNumberOfScalarComponents, etc -see gdcmFile.h-)
+  
+
+1-1-1-3-3) as a void* pointer
+- Some DataEntries are stored with their own binary representation, and you want to get them 'as they are'.
+  You will have to cast them, according to the knowledge you have about them.
+  LutRedData = (uint8_t*)f->GetEntryBinArea( 0x0028, 0x1201 ); 
+   
+1-1-1-4) Get the value(s) within a Dicom Sequence           
+
+Actually, a 'Dicom Sequence' is composed of a list a 'Sequence Items',
+each Sequence Item is a set of DataElement (that can be Dicom Sequences, recursively).
+You have to get the Sequence element, to get its number of Sequence items, to iterate on each one.
+e.g.:
+
+SeqEntry *seqEntry = f->GetSeqEntry(0x3006,0x0020); //Structure Set ROI sequence
+unsigned int n = seqEntry->GetNumberOfSQItems();    // useless : just to see !
+currentItem = seqEntry->GetFirstSQItem(); // Get the first ROI
+while (currentItem != NULL) {
+   std::string roiName = currentItem->GetEntryString(0x3006,0x0026);  //ROI name
+   std::string roiDescr = currentItem->GetEntryString(0x3006,0x0028); //ROI description
+   ...
+   // do what you want with the current ROI
+   currentItem = seqEntry->GetNextSQItem(); // Get the next ROI
+}
+
+
+1-1-2) A File Set
+-----------------
+
+If you are 150 % sure of the files you're dealing with, just read the files you
+feel like, and concatenate the pixels.
+
+Sometimes you are not sure at all (say : you were given a CDROM with an amount
+of images, laying in a Directories tree-like structure, you don't know anything
+about the Patients, and so on)
+
+A class gdcm::SerieHelper is designed to help solving this problem.
+Use it as follows :
+
+    gdcm::SerieHelper *sh = gdcm::SerieHelper::New();
+    while (int i=0; i < nbOfFiles; i++) {
+       sh->AddFileName(currentFileName[i]);
+    }
+    
+You can also pass a 'root directory', and ask or not for recursive parsing.
+    gdcm::SerieHelper *sh = gdcm::SerieHelper::New();
+    sh->SetDirectory(yourRootDirectoryName, true); // true : recursive parsing
+
+Files are 'splitted' into as many 'Single Serie UID File Set' 
+  as Series Instance UID ( 0020|000e );
+
+// -------- skip this one, for a first reading ! -----------
+
+Sometimes, the Serie UID is not enough to disseminate properly the images.
+We may want to disseminate into multiple sub series when needed.
+
+Use :
+void SerieHelper::SetUseSeriesDetails(bool s);
+   /// This function will add the following DICOM tag as being part of a
+   /// 'fake' uid. :
+   /// 0020 0011 Series Number
+   /// 0018 0024 Sequence Name
+   /// 0018 0050 Slice Thickness
+   /// 0028 0010 Rows
+   /// 0028 0011 Columns 
+
+If it's not enough for you, use :    
+void SerieHelper::AddSeriesDetail(uint16_t group, uint16_t elem, bool convert);
+
+std::string SerieHelper::CreateUniqueSeriesIdentifier(gdcm::File *inFile);
+void SerieHelper::CreateDefaultUniqueSeriesIdentifier();
+
+You may also create a "tokenizable' File Identifier of your own, using :
+void SerieHelper::AddSeriesDetail(uint16_t group, uint16_t elem, bool convert);
+and
+std::string SerieHelper::CreateUserDefinedFileIdentifier(gdcm::File *inFile);
+and use it as you feel like.
+
+// ------------ Resume reading, here !--------------------
+ 
+If you want to 'order' the files within each 'Single Serie UID File Set'
+(to build a volume, for instance), use :
+  
+   gdcm::FileList *l = sh->GetFirstSingleSerieUIDFileSet();
+   while (l)
+   { 
+      sh->OrderFileList(l);  // sort the list
+      l = sh->GetNextSingleSerieUIDFileSet();
+   } 
+    
+  The sorting will be performed on the ImagePositionPatient;
+  if not found, on ImageNumber;
+  if not found, on the File Name.
+  
+  Aware user is allowed to pass his own comparison function 
+  (if he knows, for instance, the files must be sorted on 'Trigger Time')
+  He will use the method
+  void SerieHelper::SetUserLessThanFunction( bool(*) userFunc((File *,File *) ); 
+  He may ask for a reverse sorting : 
+  sh->SetSortOrderToReverse();
+  or back to Direct Order 
+  sh->SetSortOrderToDirect();
+  
+  If, for any reason of his own, user already get the file headers,
+  he may add the gdcm::File (instead of the file name) to the SerieHelper.
+  (Sorry, not available in Python)
+
+    gdcm::SerieHelper *sh = gdcm::SerieHelper::New();
+    while (int i=0; i < nbOfFiles; i++) {
+       sh->AddFile(currentFile[i]);
+    }                           
+ * \warning : this method should be used by aware users only!
+ *            User is supposed to know the files he want to deal with
+ *           and consider them they belong to the same Set
+ *           (even if their Serie UID is different)
+ *           user will probabely OrderFileList() this list (actually, ordering
+ *           user choosen gdm::File is the sole interest of this method)
+ *           Moreover, using vtkGdcmReader::SetCoherentFileList() will avoid
+ *           vtkGdcmReader parsing twice the same files.
+ *           *no* coherence check is performed, but those specified
+ *           by SerieHelper::AddRestriction()
+ 
+   User may want to exclude some files.
+   He will use
+    void SerieHelper::AddRestriction(uint16_t group, uint16_t elem,
+                                 std::string const &value, int op);
+op belongs to :
+
+/// \brief comparison operators
+   GDCM_EQUAL ,
+   GDCM_DIFFERENT,
+   GDCM_GREATER,
+   GDCM_GREATEROREQUAL,
+   GDCM_LESS,
+   GDCM_LESSOREQUAL
+e.g. 
+    gdcm::SerieHelper *sh = gdcm::SerieHelper::New();
+    sh->AddRestriction(0x0010,0x0040,"F",GDCM_EQUAL);      // Patient's Sex
+    sh->AddRestriction(0x0008,0x0060,"MR",GDCM_DIFFERENT); // Modality 
+    while (int i=0; i < nbOfFiles; i++) { 
+    ...
+User wants to deal only with Female patient, any Modality but MR (why not?)
+   
+Maybe user knows there are several images with the same position
+and *no dicom field* may discriminates them.
+He wants to drop the 'duplicate images'
+   
+     sh->SetDropDuplicatePositions(true);
+
+Sometimes the previous stuff is *not enough* !
+
+Within a SingleSerieUIDFileSet, you can have have various orientations,
+or various positions, at various times. (not only various positions, at a single
+time, for a single orientation).
+
+User may consider that dealing only with the 'Series Instance UID' 
+is not enough and wishes to 'refine' the image selection :
+
+Suppose he has a Single Serie UID File Set (gdcm::FileList).
+He may ask to split it into several 'X Coherent File Sets' (X stands for
+'Extra').
+
+gdcm::SerieHelper *s;
+gdcm::XCoherentFileSetmap xcm;
+gdcm::FileList *l = s->GetFirstSingleSerieUIDFileSet(); // or what you want
+
+
+ The following methods must be called by user, depending on 
+ what *he* wants to do, at application time.
+  - *he* only  knows what his Series contain ! - 
+ They return a std::map of Filesets (actually : a std::map of std::vector<gdcm::File* >).
+ 
+He may ask for 'splitting' on the Orientation:
+           gdcm::XCoherentFileSetmap xcm = s->SplitOnOrientation(l);
+   
+He may ask for 'splitting' on the Position:
+           gdcm::XCoherentFileSetmap xcm = s->SplitOnPosition(l);
+   
+He may ask for 'splitting' on the any DataElement you feel like :   
+           gdcm::XCoherentFileSetmap xcm = s->SplitOnTagValue(l, group,elem);
+
+ 
+He can now work on each 'X Coherent File Set' within the std::map
+
+for (gdcm::XCoherentFileSetmap::iterator i = xcm.begin();
+                                         i != xcm.end();
+                                       ++i)
+{
+
+   // ask for 'ordering' according to the 'Image Position Patient'
+   // Sorting the Fileset (*) is mandatory!
+   // ( computing an accurate Series ZSpacing -whenever possible- is a side effect ...)
+     
+   s->OrderFileList((*i).second);  // sort the XCoherent Fileset
+}  
+
+(have a look at gdcm/Examples/exXCoherentFileSet.cxx for an example)
+
+1-2) using VTK
+--------------
+a vtkGdcmReader() method ( derived from vtkReader() ) is available.
+
+1-2-1) A single file
+--------------------
+
+   vtkGdcmReader *reader = vtkGdcmReader::New();
+   reader->SetFileName( yourDicomFilename );      
+   reader->SetLoadMode( yourLoadMode );   // See C++ part 
+   reader->SetKeepOverlays( true/false ); // See C++ part    
+   reader->Update();
+   vtkImageData* ima = reader->GetOutput();
+   int* Size = ima->GetDimensions(); 
+     
+ // -> Enjoy it.     
+
+1-2-2) A File Set
+-----------------
+
+If you are 150 % sure of the files you're dealing with, just 'add' the files you
+feel like:
+
+   vtkGdcmReader *reader = vtkGdcmReader::New();
+   for(int i=1; i< yourNumberOfFiles; i++)
+         reader->AddFileName( yourTableOfFileNames[i] );     
+   reader->SetLoadMode( yourLoadMode );   // See C++ part 
+   reader->SetKeepOverlays( true/false ); // See C++ part     
+   reader->Update();
+   vtkImageData* ima = reader->GetOutput();
+   int* Size = ima->GetDimensions();
+   
+ // -> Enjoy it.
+ 
+ Warning : The first file is assumed to be the reference file.
+ All the inconsistent files (different sizes, pixel types, etc) are discarted
+ and replaced by a black image ! 
+ 
+      User is allowed to pass a Pointer to a function of his own
+      to allow modification of pixel order (i.e. : Mirror, UpsideDown, )
+      to gdcm::FileHeleper, using SetUserFunction(userSuppliedFunction)
+
+      described as : void userSuppliedFunction(uint8_t *im, gdcm::File *f);
+
+      NB : the "uint8_t *" type of first param is just for prototyping.
+        User will Cast it according what he found with f->GetPixelType()
+        See vtkgdcmSerieViewer for an example
+ 
+
+Many users expect from vtkGdcmReader it 'orders' the images 
+(Actually, that's the job of gdcm::SerieHelper ...)
+When user knows the files with same Serie UID have same sizes, 
+same 'pixel' type, same color convention, ... 
+the right way to proceed is as follow :
+
+        gdcm::SerieHelper *sh= gdcm::NewSerieHelper();
+   //      if user wants *not* to load some parts of the file headers
+        sh->SetLoadMode(yourLoadMode);
+
+   //      if user wants *not* to load some files
+        sh->AddRestriction(group, element, value, operator);
+        sh->AddRestriction( ...
+        sh->SetDirectory(directoryWithImages);
+
+   //      if user *knows* how to order his files
+        sh->SetUserLessThanFunction(userSuppliedComparisonFunction);
+   //      or/and
+   //      if user wants to sort reverse order
+        sh->SetSortOrderToReverse();
+   
+   //      here, we suppose only the first 'Single SerieUID' Fileset is of interest
+   //      Just iterate using sh->NextSingleSerieUIDFileSet()
+   //      if you want to get all of them
+        gdcm::FileList *l = sh->GetFirstSingleSerieUIDFileSet();
+
+   //      if user is doesn't trust too much the files with same Serie UID
+        if ( !sh->IsCoherent(l) )
+           return; // not same sizes, or not same 'pixel type' -> stop
+   
+   // Maybe user knows there are several images with the same position
+   // and *no dicom field* may discriminates them.
+   // He wants to drop the 'duplicate images'
+   
+        sh->SetDropDuplicatePositions(true); 
+
+   // Sorting the Fileset (*) is mandatory!
+   // ( computing an accurate Series ZSpacing is a side effect ...)  
+        sh->OrderFileList(l);
+
+        vtkGdcmReader *reader = vtkGdcmReader::New();
+   //      if user wants to modify pixel order (Mirror, TopDown, ...)
+   //      he has to supply the function that does the job
+   //      (a *very* simple example is given in vtkgdcmSerieViewer.cxx)
+        reader->SetUserFunction (userSuppliedFunction);
+
+   //      to pass a 'Single SerieUID' Fileset as produced by gdcm::SerieHelper
+        reader->SetCoherentFileList(l);
+        reader->Update();
+
+
+//-----------------
+(*)
+User may also pass an 'X Coherent Fileset', created by one of the following
+methods : (see 1-1-2 for more details)
+ 
+           xcm = sh->SplitOnOrientation(l); 
+           xcm = sh->SplitOnPosition(l);   
+           xcm = sh->SplitOnTagValue(l, groupelem[0],groupelem[1]);
+//----------------
+
+
+You can see a full example in vtk/vtkgdcmSerieViewer2.cxx
+e.g.
+vtkgdcmSerieViewer dirname=Dentist mirror
+vtkgdcmSerieViewer dirname=Dentist reverse
+vtkgdcmSerieViewer dirname=Dentist reverse upsidedown
+
+
+1-4) Retrictions for Python users
+---------------------------------
+
+None of the methods receiving a function pointer, or a gdcm::File as a parameter
+is wrapable by swig.
+:-(
+
+
+2) How to write DICOM file
+==========================
+
+2-1) using raw C++
+------------------
+
+2-1-1) A single file
+--------------------
+In C++, if you have already the pixels in main memory, 
+you just have to process as follow :
+
+--> Create an empty gdcm::File
+        gdcm::File *file = gdcm::File::New();
+
+        std::ostringstream str;
+
+// --> Set the mandatory fields
+  // Set the image size
+        str.str("");
+        str << sizeY;
+        file->InsertEntryString(str.str(),0x0028,0x0010,"US"); // Rows
+        str.str("");
+        str << sizeX;
+        file->InsertEntryString(str.str(),0x0028,0x0011,"US"); // Columns
+        str.str("");
+        str << sizeZ;
+        file->InsertEntryString(str.str(),0x0028,0x0008, "IS"); // Nbr of Frames
+  // Set the pixel type
+        str.str("");
+        str << componentSize; //8, 16, 32
+        file->InsertEntryString(str.str(),0x0028,0x0100,"US"); // Bits Allocated
+        str.str("");
+        str << componentUse; // may be 12 or 16 if componentSize =16
+        file->InsertEntryString(str.str(),0x0028,0x0101,"US"); // Bits Stored
+        str.str("");
+        str << componentSize - 1 ;
+        file->InsertEntryString(str.str(),0x0028,0x0102,"US"); // High Bit
+  // Set the pixel representation // 0/1
+        str.str("");
+        str << img.sign;
+        file->InsertEntryString(str.str(),0x0028,0x0103, "US"); // Pixel Representation
+  // Set the samples per pixel // 1:Grey level, 3:RGB
+        str.str("");
+        str << components;
+        file->InsertEntryString(str.str(),0x0028,0x0002, "US"); // Samples per Pixel
+
+//--> Set Optional fields
+      see further how to deal with optional fields
+
+//--> Create a gdcm::FileHelper
+       gdcm::FileHelper *fileH = gdcm::FileHelper::New(file);
+
+//--> Tell the FileHelper what you did for creating the image:
+
+      // gdcm cannot guess how user built his image 
+      //  (and therefore cannot be clever about some Dicom fields)
+      // It's up to the user to tell gdcm what he did.
+      // -1) user created ex nihilo his own image and wants to write it 
+      //     as a Dicom image.
+      // USER_OWN_IMAGE
+      // -2) user modified the pixels of an existing image.
+      // FILTERED_IMAGE
+      // -3) user created a new image, using existing a set of images 
+      //    (eg MIP, MPR, cartography image)
+      //  CREATED_IMAGE
+      // -4) user modified/added some tags *without processing* the pixels 
+      //     (anonymization, ...)
+      //  UNMODIFIED_PIXELS_IMAGE
+      // -Probabely some more to be added
+      //(see gdcmFileHelper.h for more explanations)
+
+      // Use :
+      
+      fileH->SetContentType(GDCM_NAME_SPACE::USER_OWN_IMAGE);
+      fileH->SetContentType(GDCM_NAME_SPACE::FILTERED_IMAGE);
+      fileH->SetContentType(GDCM_NAME_SPACE::CREATED_IMAGE);
+      fileH->SetContentType(GDCM_NAME_SPACE::UNMODIFIED_PIXELS_IMAGE);
+      
+      // depending on what you did before!
+
+//--> Set the compression type : 
+      fileH->SetWriteTypeToJPEG();      // lossless compression        
+      fileH->SetWriteTypeToJPEG2000();  // lossless compression 
+      fileH->SetWriteTypeToDcmExplVR(); // Explicit Value Representation (no compression)
+      fileH->SetWriteTypeToDcmImplVR(); // Implicit Value Representation (no compression)
+      
+      fileH->SetWriteModeToRaw();       // Probabely you don't want to convert any LUT into RGB pixels ...
+
+//--> Set the Image Data
+       fileH->SetImageData((unsigned char *)imageData,size);
+      // ( Casting as 'unsigned char *' is just to avoid warnings.
+      // It doesn't change the values. )
+      // or
+       fileH->SetUserData((unsigned char *)imageData,size); // performs compression, when required
+      // ( Casting as 'unsigned char *' is just to avoid warnings.
+      // It doesn't change the values. )
+                  
+//-> Write !      
+      fileH->Write(fileName.str());
+
+//This works for a single image (singleframe or multiframe)
+
+2-1-1-1) Deal with optional DataElements          // TODO : finish it
+
+    Any Data Element may be added (it's up to the user to understand what he is doing!)
+    The supplied methods 'InsertXxx' will create the DataElement or replace it if it already exists.  
+    Have a look at gdcm/Dict/dicomV3.dic to see what are the various DICOM fields, with their VR.
+    
+2-1-1-1-1) Add a single Dicom DataElement          // TODO : finish it
+
+   use :
+   DataEntry * File::InsertEntryString(std::string const &value,
+                                   uint16_t group, uint16_t elem,
+                                   VRKey const &vr = GDCM_VRUNKNOWN);
+  
+   // (e.g. : patient name, patient ID, ... , or what you want,
+   //  using their Dicom identifier, and 'VR'
+      file->InsertEntryString("MyOwnPatient" ,0x0010,0x0010,"PN"); // 0010 0010 : Patient's Name
+   
+    DataEntry * File:InsertEntryBinArea(uint8_t *binArea, int lgth,
+                                    uint16_t group, uint16_t elem,
+                                    VRKey const &vr = GDCM_VRUNKNOWN);  
+   
+2-1-1-1-2) Add a Dicom Sequence           // TODO : finish it
+   SeqEntry * File::InsertSeqEntry(uint16_t group, uint16_t elem);
+   
+2-1-2) A File Set
+-----------------
+/// \todo : write it!
+
+
+// If you deal with a Serie of images, it up to you to tell gdcm, for each image,
+// what are the values of
+// 0020 0032 DS 3 Image Position (Patient)
+// 0020 0037 DS 6 Image Orientation (Patient)
+
+// You will probabely want that all the images of your file set belong to the same 'Serie'
+
+
+2-2) using VTK
+--------------
+
+/// \todo : write it!
+
+2-2-1) A single file
+--------------------
+
+/// \todo : finish it!
+
+// User of the CVS version of VTK 5 may set some 'Medical Image Properties'
+// Only the predefined DataElements are available :
+// PatientName, PatientID, PatientAge, PatientSex, PatientBirthDate, StudyID
+// It's reasonably enough for any 'decent use'
+//
+// todo : explain how to use it.
+//vtkMedicalImageProperties
+
+   // Aware user is allowed to pass his own gdcm::File *, 
+   //  so he may set *any Dicom field* he wants.
+   // (including his own Shadow Elements, or any gdcm::SeqEntry)
+   // gdcm::FileHelper::CheckMandatoryElements() will check inconsistencies,
+   // as far as it knows how.
+   // Sorry, not yet available under Python.
+   
+     vtkSetMacro(GdcmFile, gdcm::File *);
+   
+void vtkGdcmWriter::SetGdcmFile(gdcm::File *);
+
+   // gdcm cannot guess how user built his image 
+   //  (and therefore cannot be clever about some Dicom fields)
+   // It's up to the user to tell gdcm what he did.
+   // -1) user created ex nihilo his own image and wants to write it 
+   //     as a Dicom image.
+   // USER_OWN_IMAGE
+   // -2) user modified the pixels of an existing image.
+   // FILTERED_IMAGE
+   // -3) user created a new image, using existing a set of images 
+   //    (eg MIP, MPR, cartography image)
+   //  CREATED_IMAGE
+   // -4) user modified/added some tags *without processing* the pixels 
+   //     (anonymization..
+   //  UNMODIFIED_PIXELS_IMAGE
+   // -Probabely some more to be added
+   //(see gdcmFileHelper.h for more explanations)
+   
+   // User is allowed to use the following methods:
+   
+void vtkGdcmWriter::SetContentTypeToUserOwnImage()                           
+void vtkGdcmWriter::SetContentTypeToFilteredImage()                            
+void vtkGdcmWriter::SetContentTypeToUserCreatedImage()                        
+vtkGdcmWriter::void SetContentTypeToUnmodifiedPixelsImage()
+   
+  // depending on what he did before (see C++ part)
+  
+                      
+
+2-2-2) A File Set
+-----------------
+/// \todo : write it!
+
+
+2-3) using ITK
+--------------
+/// \todo : write it!
+
+2-4) Retrictions for Python users
+---------------------------------
+/// \todo : write it!
+
+
+3) DICOMDIR /// \todo: finish it!
+===========
+3-1) How to read a DICIMDIR
+3-2) How to modifiy a DICOMDIR
+3-3) How to create a DICOMDIR
+
+
+4) Some 'Command line' utilities  /// \todo: finish it!
+================================
+
+4-) PrintFile
+4-) exSerieHelper
+4-) exXCoherentFileSet
+
+4-) AnonymizeNoLoad
+4-) AnonymizeMultiPatient
+4-) AnonymizeDicomDir
+4-) PatchHeader
+4-) ReWrite
+4-) RawToDicom
+4-) exMoveImagesToSingleSerieUID
+
+4-) vtkgdcmViewer2
+4-) vtkgdcmSerieViewer2
+
+4-) PrintDicomDir
+4-) MakeDicomDir
+
+
+    *   PrintFile
+    
+     Display the header of a ACR-NEMA/PAPYRUS/DICOM File                      
+     usage: PrintFile {filein=inputFileName|dirin=inputDirectoryName}[level=n]
+                       [forceload=listOfElementsToForceLoad] [rec] [noex] 
+                       [4DLoc= ][dict= privateDirectory]                  
+                       [ { [noshadowseq] | [noshadow][noseq] } ]          
+                       [debug] [warning]                                  
+      level = 0,1,2 : depending on the amount of details user wants to see
+      rec : user wants to parse recursively the directory                 
+      noex : user doen't want extra 'user friendly' info                  
+      4DLoc: group-elem(in hexa, no space) of the DataEntry holdind 4thDim
+      listOfElementsToForceLoad : group-elem,g2-e2,... (in hexa, no space)
+                                of Elements to load whatever their length 
+      privateDirectory : source file full path name of Shadow Group elems 
+      noshadowseq: user doesn't want to load Private Sequences            
+      noshadow   : user doesn't want to load Private groups (odd number)  
+      noseq      : user doesn't want to load Sequences                    
+      debug      : user wants to run the program in 'debug mode'          
+      warning    : user wants to be warned about any oddity in the File   
+      showlut :user wants to display the Palette Color (as an int array)  
+
+    * Anonymize
+
+         Anonymizes a full gdcm-readable Dicom image
+                Warning : probably segfaults if pixels are not gdcm readable.
+                          Use AnonymizeNoLoad instead.
+         usage: Anonymize filein=inputFileName fileout=anonymizedFileName [debug][usage]
+                debug    : user wants to run the program in 'debug mode'
+                usage    : user wants to display usage
+        
+
+    * AnonymizeNoLoad
+
+       
+         Anonymizes a gdcm-readable Dicom image even if pixels aren't gdcm readable
+               Warning : the image is overwritten;
+                         to preserve its integrity, use a copy.
+         usage: AnonymizeNoLoad {filein=inputFileName|dirin=inputDirectoryName}
+                                [rubout=listOfPrivateElementsToRubOut]
+                                [ { [noshadowseq] | [noshadow][noseq] } ] [debug]
+                inputFileName : Name of the (single) file user wants to anonymize
+                inputDirectoryName : user wants to anonymize *all* the files
+                                     within the (single Patient!) directory
+                listOfElementsToRubOut : group1-elem1,g2-e2,... (in hexa)
+                                         of extra Elements to rub out
+                noshadowseq: user doesn't want to load Private Sequences
+                noshadow   : user doesn't want to load Private groups (odd number)
+                noseq      : user doesn't want to load Sequences
+                debug      : user wants to run the program in 'debug mode'
+                usage      : user wants to display usage
+         
+
+    * ReWrite
+
+ Re write a full gdcm-readable Dicom image                              
+     (usefull when the file header is not very straight).               
+                                                                        
+ usage: ReWrite filein=inputFileName fileout=outputFileName             
+       [keepoverlays] [mode=write mode] [monochrome1]                   
+       [noshadow] [noseq][debug]                                        
+  --> The following line to 'rubout' a burnt-in Patient name            
+       [rubout=xBegin,xEnd,yBegin,yEnd [ruboutvalue=n (<255)] ]         
+  --> The 2 following lines, to extract a sub image within some frames  
+       [ROI=xBegin,xEnd,yBegin,yEnd]                                    
+       [firstframe=beg] [lastframe=end]                                 
+                                                                        
+        mode = a (ACR), x (Explicit VR Dicom), r (RAW : only pixels)    
+               j (jpeg lossless), 2 (jpeg2000)                          
+        keepoverlays : user wants to keep ACR-NEMA-like overlays        
+        monochrome1 = user wants MONOCHROME1 photom. interp. (0=white)  
+        noshadowseq: user doesn't want to load Private Sequences        
+        noshadow : user doesn't want to load Private groups (odd number)
+        noseq    : user doesn't want to load Sequences                  
+        rgb      : user wants to transform LUT (if any) to RGB pixels   
+        warning  : developper wants to run the program in 'warning mode'
+        debug    : developper wants to run the program in 'debug mode'          
+
+    * PrintDicomDir
+
+         Displays the tree-like structure of a DICOMDIR File
+         usage: PrintDicomDir filein=fileName [detail=n] [level=n] [debug] [usage]
+                detail = 1 : Patients, 2 : Studies, 3 : Series, 4 : Images
+                         5 : Full Content
+                level = 0,1,2 : depending on user (what he wants to see, when detail=5)
+                debug    : user wants to run the program in 'debug mode'
+                usage    : user wants to display usage
+         
+
+    * MakeDicomDir
+
+         Explores recursively the given directory, makes the relevant DICOMDIR
+                and writes it as 'NewDICOMDIR'
+         usage: MakeDicomDir dirname=rootDirectoryName 
+                            [ { [noshadowseq] | [noshadow][noseq] } ] [debug] [usage]
+                noshadowseq: user doesn't want to load Private Sequence
+                noshadow   : user doesn't want to load Private groups (odd number)
+                noseq      : user doesn't want to load Sequences
+                debug      : user wants to run the program in 'debug mode'
+                usage      : user wants to display usage
+         
+
+    * AnonymizeDicomDir
+
+         Anonymizes a gdcm-readable DICOMDIR even when some 'Objects'
+                are not yet taken into account
+                Warning : the DICOMDIR is overwritten; 
+                          to preserve its integrity, use a copy.
+         usage: AnonymizeDicomDir filein=dicomDirName [debug] [usage] [usage]
+                debug    : user wants to run the program in 'debug mode'
+                usage    : user wants to display usage
+         
+
+    * PatchHeader
+
+          Allows aware user to patch a gdcm-parsable image header, without 
+               loading image.
+               Warning : the image(s) is/are overwritten
+                         to preserve image(s) integrity, use a copy.
+               WARNING : *NO CHECK* is performed on the new values.
+                         Use only if you are sure the original values are wrong
+                         *and* your values are right...
+         usage: PatchHeader {filein=inputFileName|dirin=inputDirectoryName}
+                     [ { [size=] | [rows=][columns=] } ] [planes=]
+                     [bitsallocated=] [bitsstored=]
+                     [highbit=] [samplesperpixel=]
+                     [pixelrepresentation=] [samplesperpixel=]
+                     [ { [noshadowseq] | [noshadow][noseq] } ] [debug]
+                                                                                 
+             inputFileName : Name of the (single) file user wants to modify
+             inputDirectoryName : user wants to modify *all* the files
+                                  within the directory
+             newsize         : new size, to overwrite old (wrong) one
+                or
+             rows            : new Rows number,    to overwrite old (wrong) one
+             columns         : new Columns number, to overwrite old (wrong) one
+             planes          : new Planes number,  ...
+             bitsallocated   : new Bits Allocated number,  ...
+             bitsstored      : new Bits Stored number,  ...
+             highbit         : new High Bit number,  ...
+             samplesperpixel : new Samples Per Pixel, ...
+             pixelrepresentation : new Pixel Representation, ...
+                                                                                 
+             noshadowseq: user doesn't want to load Private Sequences
+             noshadow   : user doesn't want to load Private groups (odd number)
+             noseq      : user doesn't want to load Sequences
+             debug      : user wants to run the program in 'debug mode'
+             usage      : user wants to display usage
+         
+
+    * exXCoherentFileSet :
+                                                 
+Shows the various 'XCoherent' Filesets within a directory                 
+Optionaly copies the images in a Directories tree                          
+usage: exXCoherentFileSet {dirin=inputDirectoryName}                      
+                           dirout=outputDirectoryName                     
+                       { tag=group-elem | pos | ori } [sort] [write]      
+                       [ { [noshadowseq] | [noshadow][noseq] } ] [debug]  
+                                                                          
+       dirin : user wants to analyze *all* the files                      
+                            within the directory                          
+       write : user wants to create directories                           
+       dirout : will be created if doesn't exist                          
+       pos  : user wants to split each Single SerieUID Fileset on the     
+                         'Image Position '                                
+       ori  : user wants to split each Single SerieUID Fileset on the     
+                         'Image Orientation '                             
+       tag : group-elem    (in hexa, no space)                            
+                       the user wants to split on                         
+       sort :  user wants FileHelper to sort the images                   
+               Warning : will probabely crah if sort has no meaning       
+                (not only look at image names)                            
+       noshadowseq: user doesn't want to load Private Sequences           
+       noshadow   : user doesn't want to load Private groups (odd number) 
+       noseq      : user doesn't want to load Sequences                   
+       verbose    : user wants to run the program in 'verbose mode'       
+       debug      : developper wants to run the program in 'debug mode'  
+
+}}}
+</pre>

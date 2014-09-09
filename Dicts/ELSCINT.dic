@@ -1,0 +1,23 @@
+00e1 0010 LO 1 Implementor ID
+00e1 1000 LO 1 Really Unknow
+00e1 1022 DS 2 Presentation Relative Center
+00e1 1023 DS 2 Presentation Relative Part
+00e1 1024 CS 1 Presentation Horizontal Invert
+00e1 1025 CS 1 Presentation Vertical Invert
+00e1 1040 SH 1 Image Label
+01f3 0010 LO 1 Implementor ID
+01f3 1011 SQ 1 PS Sequence
+07a1 0010 LO 1 Implementor ID
+07a1 1001 UL 1 number of series in study
+07a1 1002 UL 1 number of images in series
+07a1 1003 UL 1 last update time
+07a1 1004 UL 1 last update date
+07a1 100a OB 1 Elscint Store Image Here
+07a1 1010 LO 1 Tamar Software Version
+07a1 1011 CS 1 Unknown [LOSSLESS RICE]
+07a1 1013 UL 1 Unknown 529792
+07a1 1014 LO 1 protection flag
+07a3 0010 LO 1 Unknown [ELSCINT1]
+07a3 1001 LO 1 Unknow [3.0]
+6001 0010 LO 1 Implementor ID
+6001 1010 CS 1 Text Overlay Flag

@@ -1,0 +1,6 @@
+0019 1000 CS 1 Internal Value
+0019 1002 DS 1 Total Area Dose Product
+0019 1005 US 1 Cassette Image 
+0019 1006 FD 1 Table Object Distance
+0019 1007 FD 1 Table Detector Distance
+0019 1008 US 1-n Ortho Step Distance

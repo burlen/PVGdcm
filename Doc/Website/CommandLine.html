@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+   <META http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+   <TITLE>Command Line Utilities</TITLE>
+</HEAD>
+<BODY>
+<H2>Command Line Utilities :</H2>
+<UL>
+   <LI> <b>PrintFile</b>
+        <font size=-1>
+   <pre>
+   Displays the header of any kind of ACR-NEMA/PAPYRUS/DICOM File
+   usage: PrintFile filein=fileName [level=n] 
+                    [ { [noshadowseq] | [noshadow][noseq] } ] [debug] [usage]
+          level = 0,1,2 : depending on the amount of details user wants to see
+          noshadowseq: user doesn't want to load Private Sequences
+          noshadow   : user doesn't want to load Private groups (odd number)
+          noseq      : user doesn't want to load Sequences
+          debug      : user wants to run the program in 'debug mode'
+          usage      : user wants to display usage
+   </pre>
+   </font>
+
+   <LI> <b>Anonymize</b>
+        <font size=-1>
+   <pre>
+   Anonymizes a full gdcm-readable Dicom image
+          Warning : probably segfaults if pixels are not gdcm readable.
+                    Use AnonymizeNoLoad instead.
+   usage: Anonymize filein=inputFileName fileout=anonymizedFileName [debug][usage]
+          debug    : user wants to run the program in 'debug mode'
+          usage    : user wants to display usage
+  </pre>
+   </font>
+
+   <LI> <b>AnonymizeNoLoad</b>
+        <font size=-1>
+   <pre> 
+   Anonymizes a gdcm-readable Dicom image even if pixels aren't gdcm readable
+         Warning : the image is overwritten;
+                   to preserve its integrity, use a copy.
+   usage: AnonymizeNoLoad {filein=inputFileName|dirin=inputDirectoryName}
+                          [rubout=listOfPrivateElementsToRubOut]
+                          [ { [noshadowseq] | [noshadow][noseq] } ] [debug]
+          inputFileName : Name of the (single) file user wants to anonymize
+          inputDirectoryName : user wants to anonymize *all* the files
+                               within the (single Patient!) directory
+          listOfElementsToRubOut : group1-elem1,g2-e2,... (in hexa)
+                                   of extra Elements to rub out
+          noshadowseq: user doesn't want to load Private Sequences
+          noshadow   : user doesn't want to load Private groups (odd number)
+          noseq      : user doesn't want to load Sequences
+          debug      : user wants to run the program in 'debug mode'
+          usage      : user wants to display usage
+   </pre>
+   </font>
+
+   <LI> <b>ReWrite</b>
+        <font size=-1>
+   <pre>
+   Reads and rewrites a full gdcm-readable Dicom image (compressed Pixels are expanded)
+                   (usefull when the file is not very straight).                  
+   usage: ReWrite filein=inputFileName fileout=anonymizedFileName
+                  [mode=write mode] [rgb]
+                  [ { [noshadowseq] | [noshadow][noseq] } ] [debug] [usage]
+          write mode = a (ACR), x (Explicit VR Dicom), r (RAW : only pixels)
+          rgb        : user wants to transform LUT (if any) into RGB 
+          noshadowseq: user doesn't want to load Private Sequences
+          noshadow   : user doesn't want to load Private groups (odd number)
+          noseq      : user doesn't want to load Sequences
+          debug      : user wants to run the program in 'debug mode'
+          usage      : user wants to display usage
+   </pre>
+   </font>
+
+   <LI> <b>PrintDicomDir</b>
+        <font size=-1>
+   <pre>
+   Displays the tree-like structure of a DICOMDIR File
+   usage: PrintDicomDir filein=fileName [detail=n] [level=n] [debug] [usage]
+          detail = 1 : Patients, 2 : Studies, 3 : Series, 4 : Images
+                   5 : Full Content
+          level = 0,1,2 : depending on user (what he wants to see, when detail=5)
+          debug    : user wants to run the program in 'debug mode'
+          usage    : user wants to display usage
+   </pre>
+   </font>
+
+   <LI> <b>MakeDicomDir</b>
+        <font size=-1>
+        <pre>
+   Explores recursively the given directory, makes the relevant DICOMDIR
+          and writes it as 'NewDICOMDIR'
+   usage: MakeDicomDir dirname=rootDirectoryName 
+                      [ { [noshadowseq] | [noshadow][noseq] } ] [debug] [usage]
+          noshadowseq: user doesn't want to load Private Sequence
+          noshadow   : user doesn't want to load Private groups (odd number)
+          noseq      : user doesn't want to load Sequences
+          debug      : user wants to run the program in 'debug mode'
+          usage      : user wants to display usage
+   </pre>
+   </font>
+
+   <LI> <b>AnonymizeDicomDir</b>
+        <font size=-1>
+   <pre>
+   Anonymizes a gdcm-readable DICOMDIR even when some 'Objects'
+          are not yet taken into account
+          Warning : the DICOMDIR is overwritten; 
+                    to preserve its integrity, use a copy.
+   usage: AnonymizeDicomDir filein=dicomDirName [debug] [usage] [usage]
+          debug    : user wants to run the program in 'debug mode'
+          usage    : user wants to display usage
+   </pre>
+   </font>
+
+   <LI> <b>PatchHeader</b>
+   <font size=-1>
+   <pre>
+    Allows aware user to patch a gdcm-parsable image header, without 
+         loading image.
+         Warning : the image(s) is/are overwritten
+                   to preserve image(s) integrity, use a copy.
+         WARNING : *NO CHECK* is performed on the new values.
+                   Use only if you are sure the original values are wrong
+                   *and* your values are right...
+   usage: PatchHeader {filein=inputFileName|dirin=inputDirectoryName}
+               [ { [size=] | [rows=][columns=] } ] [planes=]
+               [bitsallocated=] [bitsstored=]
+               [highbit=] [samplesperpixel=]
+               [pixelrepresentation=] [samplesperpixel=]
+               [ { [noshadowseq] | [noshadow][noseq] } ] [debug]
+                                                                           
+       inputFileName : Name of the (single) file user wants to modify
+       inputDirectoryName : user wants to modify *all* the files
+                            within the directory
+       newsize         : new size, to overwrite old (wrong) one
+          or
+       rows            : new Rows number,    to overwrite old (wrong) one
+       columns         : new Columns number, to overwrite old (wrong) one
+       planes          : new Planes number,  ...
+       bitsallocated   : new Bits Allocated number,  ...
+       bitsstored      : new Bits Stored number,  ...
+       highbit         : new High Bit number,  ...
+       samplesperpixel : new Samples Per Pixel, ...
+       pixelrepresentation : new Pixel Representation, ...
+                                                                           
+       noshadowseq: user doesn't want to load Private Sequences
+       noshadow   : user doesn't want to load Private groups (odd number)
+       noseq      : user doesn't want to load Sequences
+       debug      : user wants to run the program in 'debug mode'
+       usage      : user wants to display usage
+   </pre>
+   </font>
+</UL>
+</BODY>
+</HTML>
+

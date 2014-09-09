@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+   <META http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+   <TITLE>Gdcm Home Page</TITLE>
+</HEAD>
+
+<BODY>
+
+<!#######################################################################>
+<H1>Gdcm Home Page</H1>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<blink>Note for Google users : </blink><br>
+If you don't see in the left part of your screen
+ the blue 'side bar', <br>
+ starting with 'News', 'Licence', 'Documentation',
+ 'Download', etc better click on : </br>
+ <a
+ href="http://www.creatis.insa-lyon.fr/Public/Gdcm/">
+ http://www.creatis.insa-lyon.fr/Public/Gdcm/ </a> <br>
+ 
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+<br><br><br>
+
+<H2>(Important note for ITK users)</H2>
+
+   <UL>
+   <LI> ITK (Insight ToolKit) still uses by default gdcm 1.2.x, but can be used with a system installed gdcm 2.x
+   <LI> Current gdcm 1.x version is 1.3.x
+   </UL>  
+   
+<H2>(Important note for new DICOM  users)</H2>
+   <UL>
+   <LI> An other version, called <a href="http://gdcm.sourceforge.net">gdcm2</a> exists, an is a complete ground up rewrite of GDCM 1.x. 
+   (have a look at <a href="http://apps.sourceforge.net/mediawiki/gdcm/index.php?title=GDCM_Release_2.0">
+                            http://apps.sourceforge.net/mediawiki/gdcm/index.php?title=GDCM_Release_2.0
+                   </a>)</br>
+   If you are a new DICOM user, better use gdcm2, because its structure will allow much more features than gdcm1.x does (it's almost exclusively 'image oriented'). gdcm2 is wrapped in python, C# and Java.
+   </UL> 
+
+<br><br><br>
+
+ 
+
+Gdcm is yet another C++ library dedicated to reading/parsing and writing
+<A HREF="http://medical.nema.org/">Dicom</A> medical files.
+<BR>
+<B>GDCM</B> stands as a short for "<B>G</B>rass roots
+<B>D</B>i<B>C</B>o<B>M</B>. 
+
+<!###################################>
+<H2>What gdcm <font color=#00ff00>IS</font></H2>
+<UL>
+<LI>gdcm implements the
+   <A HREF="http://www.dclunie.com/dicom-status/status.html">
+           dicom base standard <B>part 5</B></A>
+   that concentrates on image file format.
+   Hence gdcm supports the following formats:
+   <UL>
+   <LI>ACR-NEMA version 1 and 2
+   </LI>
+   <LI>Dicom version 3.0 (including various encodings of JPEG -lossless and
+       lossy-, RLE).
+       Please refer to
+       <A HREF="ConformanceSummary.html">gdcm conformance summary</A>
+       for more details.
+   <LI>Papyrus V2 and V3 file headers are readable; the user will have to use 
+       low level accessors if he wants to get the image pixels -sorry-.
+   </LI>
+   </UL>
+<LI> gdcm includes a lot of heuristics that allow reading all the 
+    'exotic' files (headers with oddities) we had to deal with.<BR>
+     Any king of 'exotic' Dicom file is welcome, to help us to improve our
+     library.
+</LI>
+</LI>
+<LI>gdcm is distributed with
+   <A HREF="License.html">Berkeley-like license</A>.
+</LI>
+<LI>gdcm is cross platform (it compiles with gcc 2.95, 2.96, 3.0.x, 3.2.x,
+     3.3.x, 3.4.x, 4.0.x, 4.1.x , icc , cc (SunOS), VisualC++, Borland, 
+     nmake... )
+</LI>
+<LI> gdcm has a nightly Dashboard (the whole lib is checked every night)
+</LI>
+<LI>gdcm targets both GNU/Un*ces and Windows/VC++
+   (refer to
+   <A HREF="Installation.html#gdcmRequirements">requirements</A>
+   for details).
+</LI>
+<LI>gdcm comes with a
+   <A HREF="http://public.kitware.com/VTK">VTK</A>
+   shallow wrapper class <TT>vtkGdcmReader</TT> (refer to
+   <A HREF="VtkGdcm.html">VtkGdcm</A>)
+   to ease the burden of VTK users,
+<LI>gdcm also comes with
+   <A HREF="html.developper/DoxyPythonComplete.html">gdcmPython</A>
+   it's
+   <A HREF="http://www.swig.org">SWIG</A>
+   generated
+  <A HREF="http://www.python.org">Python</A>
+  wrappers.
+</LI>
+</UL>
+
+<!###################################>
+<H2>What gdcm is <font color=#ff0000>NOT</font></H2>
+
+Except for
+<A HREF="http://www.dclunie.com/dicom-status/status.html">
+        dicom base standard <B>part 5</B></A>
+gdcm does NOT implement any other part of the Dicom base standard
+(as opposed to other C++ based with open license libraries like
+<A HREF="http://www.offis.de/projekte/ig/dicom/soft-docs/soft01_d.html">
+        DCMTK</A>&nbsp;
+or
+<A HREF="http://www.erl.wustl.edu/DICOM/ctn.html">CTN</A>).
+<BR>
+In particular <B>gdcm is not aware</B> of:
+<UL>
+<LI>the Dicom network file exchange protocol (Query/Retrieve),
+</LI>
+<LI>the Dicom media storage formats (well ... it knows about the
+    <TT>DICOMDIR</TT> -reading and writing- and its parts <TT>PATIENT</TT>,
+    <TT>STUDY</TT>, <TT>SERIES</TT>, <TT>IMAGE</TT>)
+</LI>
+<LI>Print, Verification
+</LI>
+<LI>ANY OTHER PART of Dicom.
+</LI>
+</UL>
+
+<!###################################>
+<H2>What gdcm still misses</H2>
+
+Among all the features of the
+<A HREF="http://www.dclunie.com/dicom-status/status.html">
+        dicom part 5</A>
+gdcm doesn't implement (yet?)
+<UL>
+  <LI>the integration of (optional) overlays on image.
+  </li>
+  <LI> ...
+  </li>  
+</UL>
+Gdcm also still needs
+<UL>
+<LI> an enhanced and simpler API to access the various forms of pixel data
+     (e.g. RGB, GrayLevel, RawData...),
+</LI>
+<LI> a decent user's guide (currently, only a partial doxygenation is
+     available),
+</LI>
+<LI> the python wrappers to be fixed,
+</LI>
+<LI> a simple
+     <A HREF="http://www.wxwindows.org/">wxWidgets</A>
+     Dicom file editor.
+</LI>
+</UL>
+
+<!###################################>
+<UL>
+</UL>
+
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+</BODY>
+</HTML>

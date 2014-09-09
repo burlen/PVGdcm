@@ -1,0 +1,50 @@
+import sys
+import os.path
+from gdcmConfigDemo import *
+from gdcmPython.vtk import *
+from vtkpython import *
+
+def PrintUse():
+   print ""
+   print "Use :"
+   print "-----"
+   print "%s <fileName>" % sys.argv[0]
+   print "   fileName : path to the DICOM file to see"
+   print ""
+   print ""
+
+# Get the file names
+try:
+   fileName = sys.argv[1]
+except IndexError:
+   fileName = os.path.join(GDCM_DATA_ROOT, "test.acr")
+   if( not os.path.isfile(fileName) ):
+      fileName=os.path.join(os.path.split(sys.argv[0])[0],"test.acr")
+
+if( not os.path.isfile(fileName) ):
+   PrintUse()
+   sys.exit(1)
+
+# read the image
+reader = vtkGdcmReader()
+reader.SetFileName(fileName)
+reader.Update()
+
+# show the image
+viewer = vtkImageViewer()
+viewer.SetInput(reader.GetOutput())
+rng = reader.GetOutput().GetScalarRange()
+viewer.SetColorWindow(rng[1] - rng[0])
+viewer.SetColorLevel(0.5 * (rng[1] + rng[0]))
+
+dim = reader.GetOutput().GetDimensions()
+viewer.SetSize(dim[0],dim[1])
+if(dim[2] != 1):
+   # For multiframe dicom, take a snapshot of the center slice (+/- 1)
+   viewer.SetZSlice(dim[2] / 2)
+else:
+   viewer.SetZSlice(0)
+viewer.Render()
+
+# sys.stdin.read(1)
+

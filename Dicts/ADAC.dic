@@ -1,0 +1,5 @@
+0019 0010 LO 2 ADAC Header Signature
+0019 1002 IS 1 Ver200 ADAC Pegasys File Size
+0019 1021 US 1 Ver200 Number of ADAC Headers
+0019 1041 IS 1-n Ver200 ADAC Header/Image Size
+0019 1061 OB 1 Ver200 ADAC Pegasys Headers

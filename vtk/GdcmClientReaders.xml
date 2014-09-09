@@ -1,0 +1,6 @@
+<ParaViewReaders>
+
+  <Proxy group="sources" name="vtkGdcmReader" />
+
+</ParaViewReaders>
+

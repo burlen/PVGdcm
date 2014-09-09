@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+   <META http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+   <TITLE>Gdcm source installation</TITLE>
+</HEAD>
+                                                                                
+<BODY>
+                                                                                
+<!#######################################################################>
+<H1>Installing gdcm from sources</H1>
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+
+<!###################################>
+<H2> <A CLASS="anchor" NAME="gdcmRequirements">Requirements</A></H2>
+<UL>
+<LI> For the core C++ library you shall need a C++ compiler with the
+    "list" and "map" STL containers.
+    <BR>
+    Gdcm is developped and tested under:
+    <UL>
+    <LI> GNU/linux (gcc 3.2.x)
+    </LI>
+    <LI> Win32/VC++ 6.x
+    </LI>
+    </UL>
+</LI>
+<LI> <A HREF="http://www.cmake.org">Cmake</A>
+   is used by gdcm for generating Un*x makefiles or VC++ projects.
+   Grab latest release (at least 2.0.3).
+</LI>
+<LI> Optionnaly, for the
+   <A HREF="VtkGdcm.html">VTK wrappers</A>
+   you will additionaly need :
+</LI>
+<LI> Optionnaly, for the
+   <A HREF="html.developper/DoxyPythonComplete.html">Python wrappers</A>
+   you will additionaly need :
+   <UL> 
+   <LI> <A HREF="http://www.python.org/2.2.2/">Python version 2.2.x</A>
+   </LI>
+   <LI> <A HREF="http://www.swig.org">Swig</A>
+       at least version 1.3.17x (in order to handle C++ member overloading,
+       shadow classes and static methods)
+       <UL>
+       <LI>Rpms for GNU/linux:
+     <A HREF="http://www.creatis.insa-lyon.fr/rpm/swig13-1.3.17-1.i386.rpm">
+            swig13-1.3.17-1.i386.rpm</A>,
+     <A HREF="http://www.creatis.insa-lyon.fr/rpm/swig13-1.3.17-1.src.rpm">
+            swig13-1.3.17-1.src.rpm</A>.
+       </LI>
+       <LI>for Win32 you shall need to compile 
+            <A HREF="http://www.swig.org/download.html">the sources</A>
+       </LI>
+       </UL>
+   </LI>
+   </UL>
+</UL>
+
+<!###################################>
+<H2> GNU/Linux walkthrough for the impatient bash user</H2>
+<UL>
+   <LI><TT>cd SOMEWHERE</TT>
+   </LI>
+   <LI><TT>
+     export CVSROOT=:pserver:anonymous@cvs.creatis.insa-lyon.fr:2402/cvs/public
+      </TT>
+   </LI>
+   <LI><TT>cvs login</TT> (at prompt <TT>CVS password</TT>
+       answer with <TT>anonymous</TT>)
+   </LI>
+   <LI><TT>cvs co gdcm</TT>
+   </LI>
+   <LI>[Optional, for test suite]
+      <TT>cvs co gdcmData</TT>
+   </LI>
+   <LI><TT>mkdir gdcmInstall</TT>
+   </LI>
+   <LI><TT>mkdir gdcmBin</TT>
+   </LI>
+   <LI><TT>cd gdcmBin</TT>
+   </LI>
+   <LI><TT>ccmake ../gdcm</TT>
+      <UL>
+      <LI>
+         Toggle and adjust the required options and parameters
+         <BR>
+         (see below for more info)
+      </LI>
+      <LI> hit <TT>c</TT>
+         (a couple times, until no stars appear, in order configure)
+      </LI>
+      <LI> hit <TT>g</TT> (generate makefiles)
+      </LI>
+      <LI> hit <TT>q</TT> (quit ccmake)
+      </LI>
+      </UL>
+   </LI>
+   <LI> <TT>make</TT>
+   </LI>
+   <LI> <TT>make install</TT>
+   </LI>
+   <LI>[Optional] <TT>make test</TT>
+   </LI>
+</UL>
+
+<!###################################>
+<H2> Step by step recompilation</H2>
+<UL>
+<LI> Retrieve the
+   <A HREF="Cvs.html">
+          sources of gdcm through cvs</A>
+   and expand them in a source directory that we
+   shall refer as <TT>gdcmSOURCES</TT>.
+</LI>
+<LI> Create a compile directory (e.g. <TT>gdcmBin</TT>) that 
+   we shall refer as <TT>gdcmBINARY</TT>.
+</LI>
+<LI> [Optional] if you wish to install in a temporary installation
+   directory, create it. We shall refer to this directory
+   as <TT>gdcmINSTALL</TT>.
+</LI>
+<LI> Change working directory to <TT>gdcmBINARY</TT>.
+</LI>
+<LI> Invoke ccmake (from <TT>gdcmBINARY</TT>) with <TT>gdcmSOURCES</TT>
+   as source directory e.g. <TT>ccmake ../gdcm</TT> on Un*ces or
+   invoke <TT>CMakeSetup</TT> on Win32 and setup the source directory
+   and the compile directory.
+   <BR>
+   Hit <B><TT>c</TT></B> for a first automatic configuration
+  of your platteform.
+</LI>
+<LI> Select the options that best suits your needs. Basically this means
+   toggling ON or OFF the following parameters
+   <UL>
+   <LI> <TT>GGDCM_VTK</TT>
+      if you wish to generate the <A HREF="VtkGdcm.html">VTK wrappers</A>.
+      When automatic configuration fails you should manually set up
+      the cmake variable <TT>VTK_DIR</TT>.
+   </LI>
+   <LI> <TT>GDCM_WRAP_PYTHON</TT>
+      if you wish to generate the 
+      <A HREF="html.developper/DoxyPythonComplete.html">Python wrappers</A>.
+   </LI>
+   <LI> <TT>GDCM_DOXYGEN</TT>
+      if you wish to generate the doxygen documentation,
+   </LI>
+   </UL>
+</LI>
+<LI> Among the other options, you might consider
+   toggling ON or OFF the following parameters
+   <UL>
+   <LI> <TT>CMAKE_INSTALL_PREFIX</TT>
+      should be set to <TT>gdcmINSTALL</TT>.
+   </LI>
+   <LI> <TT>BUILD_EXAMPLES</TT>
+      if you wish to generate the C++ gdcm examples,
+   </LI>
+   <LI> <TT>BUILD_TESTING</TT>
+      if you wish to generate gdcm test suite. When doing so you will
+      need to
+      <UL>
+      <LI> <A HREF="GdcmDataCvs.html">retrieve gdcmData</A>
+         i.e. the set of Dicom image used in the test suite and
+         expand them in a directory refered as <TT>gdcmDATA</TT>.
+      </LI>
+      <LI> setup cmake <TT>GDCM_DATA_ROOT</TT> to <TT>gdcmDATA</TT>.
+      </LI>
+      </UL>
+   </LI>
+   <LI> <TT>CMAKE_BUILD_TYPE</TT> can be set up to <TT>Debug</TT>
+      if you plan to use your native debugger.
+   </LI>
+   <LI> <TT>CMAKE_CXX_FLAGS</TT> for cautious developpers should be
+      set to
+     <TT>-g -O0 -Wall -W -Wshadow -Wunused -Wno-system-headers -Wno-deprecated
+         -Woverloaded-virtual
+     </TT>
+   </LI>
+   </UL>
+</LI>
+<LI>
+   Hit <B><TT>c</TT></B> a couple times until they are no remaining "*"
+   (star character) preceeding the values of the gdcm variables.
+   <BR>
+   If you get warnings about
+   <TT>CMake forcing CMAKE_CXX_FLAGS</TT> (or other compiler variables)
+   simply ignore them and hit <B><TT>e</TT></B> to resume configuration.
+</LI>
+<LI>
+   Hit <B><TT>g</TT></B> in order to generate the makefiles (on Un*x)
+   or the workspace and project (on Win32).
+</LI>
+<LI>
+   Hit <B><TT>q</TT></B> to exit from <TT>ccmake</TT>.
+</LI>
+<LI> On Un*x launch <TT>make</TT>. On Win32 enter the VC++ gdcm.dsw
+   and lauch a <TT>build all</TT>.
+</LI>
+</UL>
+
+<!###################################>
+<H2>Installation</H2>
+This is an optional stage for developpers.
+<BR>
+On Un*x proceed with the install stage with <TT>make install</TT>.
+
+<!###################################>
+<H2>Running the test suite</H2>
+The impatient can run the full test suite with <TT>make test</TT>.
+<BR>
+For the test suite to be effective, you must have set
+<TT>BUILD_TESTING</TT> to <TT>ON</TT> when configuring <TT>ccmake</TT>.
+<UL>
+<LI>
+   <UL>
+   <LI> if you run the tests BEFORE installing then
+      positionate the environment variable <TT>GDCM_DICT_PATH</TT>
+      to <TT>gdcmSOURCES/Dicts</TT>
+      (e.g. <TT>export GDCM_DICT_PATH=$(gdcmSOURCES)/Dicts</TT>)
+   </LI>
+   <LI> if you run the tests AFTER installing then
+      positionate the environment variable <TT>GDCM_DICT_PATH</TT>
+      to <TT>gdcmINSTALL/share</TT>
+      (e.g. <TT>export GDCM_DICT_PATH=$(gdcmINSTALL)/Dicts</TT>)
+   </LI>
+   </UL>
+</LI>
+<LI>Assuming your current working directory is <TT>gdcmBINARY</TT>
+   the gdcm tests can be run in three different modes:
+   <OL>
+   <LI> Interactive access by number: run 
+      <TT>./bin/gdcmTests</TT> 
+      and select the number of the test you wish to run.
+   </LI>
+   <LI> Access to a test through it's name : pass the name of the
+      test as an argument to
+      <TT>./bin/gdcmTests</TT> 
+      e.g.
+      <TT>./Test/gdcmTests TestAllEntryVerify</TT>.
+   </LI>
+   <LI> Launch the full test suite : (again we assume the
+      current working directory is <TT>gdcmBINARY</TT>)
+      run <B><TT>ctest</TT></B>. This is equivalent to <TT>make test</TT>.
+      <BR>
+      ctest supports some options (refer to the
+      <A HREF="http://www.cmake.org">CMake documentation</A> 
+      for other options) :
+      <UL>
+      <LI> a verbose mode e.g. <TT>ctest -V</TT>
+      </LI>
+      <LI> argument filtering with regexp e.g. <TT>ctest -R print -V</TT>
+         runs the tests containing "print" in their name and
+         makes a verbose output.
+      </LI>
+      </UL>
+   </LI>
+   </OL>
+</LI>
+</UL>
+
+<HR size="1"><ADDRESS style="align: right;"></ADDRESS>
+                                                                                
+</BODY>
+</HTML>
+

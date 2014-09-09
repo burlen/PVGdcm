@@ -1,0 +1,14 @@
+0019 1010 LO 1-n Image Processing Parameters
+0019 1011 LO 1 Identification Data 
+0019 1013 LO 1 Sensitometry Name
+0019 1015 LO 1 Dose Monitoring List
+0019 101A LO 1 Clipped Exposure Deviation
+0019 101B LO 1 Logarithmic PLT Full Scale
+0019 1060 US 1 Total number of series
+0019 1062 SH 1 ID Station name
+0019 1065 US 1 Number of images in study to be transmitted (only sent with autoverify on)
+0019 1070 US 1 Total number of images
+0019 1080 ST 1 Geometrical Transformations
+0019 1081 ST 1 Roam Origin
+0019 1082 US 1 Zoom factor
+0019 1093 CS 1 Status

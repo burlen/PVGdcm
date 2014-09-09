@@ -1,0 +1,15 @@
+#include <iostream>
+
+class MyException {
+public:
+	MyException() { cout << "In exception" << endl; }
+};
+
+void Thrower(void) {
+	throw MyException();
+}
+
+void MyWrappedFunction(void) {
+   try { Thrower(); }
+   catch (MyException &) { cout<<"Exception caught in caller"<<endl; }
+}
